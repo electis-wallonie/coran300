@@ -61,6 +61,7 @@ svg.i{width:1.15em;height:1.15em;vertical-align:-.2em;flex:none}
 .chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:var(--surface-2);font-weight:700;font-size:14px;border:0}
 .chip.gold{background:var(--gold-soft);color:var(--gold)}
 .chip.lapis{background:var(--lapis-soft);color:var(--lapis)}
+.langbtn{font-weight:800;font-size:13px;letter-spacing:.04em;color:var(--lapis)}
 .iconbtn{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface)}
 
 /* hero */
@@ -251,8 +252,9 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);max-width:70ch}
 </head>
 <body>
 <header class="top"><div class="wrap">
-  <button class="brand" id="homeBtn" aria-label="Accueil"><svg class="seal" viewBox="0 0 100 100" aria-hidden="true"><g fill="var(--lapis)"><rect x="20" y="20" width="60" height="60" rx="4"/><rect x="20" y="20" width="60" height="60" rx="4" transform="rotate(45 50 50)"/></g><circle cx="50" cy="50" r="17" fill="var(--gold-bright)"/></svg><b>Les 300 mots du Coran</b></button>
+  <button class="brand" id="homeBtn" aria-label="Accueil"><svg class="seal" viewBox="0 0 100 100" aria-hidden="true"><g fill="var(--lapis)"><rect x="20" y="20" width="60" height="60" rx="4"/><rect x="20" y="20" width="60" height="60" rx="4" transform="rotate(45 50 50)"/></g><circle cx="50" cy="50" r="17" fill="var(--gold-bright)"/></svg><b id="brandName">Les 300 mots du Coran</b></button>
   <div class="chips" id="chips"></div>
+  <button class="iconbtn langbtn" id="langBtn" aria-label="English version">EN</button>
   <button class="iconbtn" id="setBtn" aria-label="Réglages"></button>
 </div></header>
 <main class="wrap" id="app"></main>
@@ -262,10 +264,124 @@ footer{margin-top:40px;font-size:13px;color:var(--muted);max-width:70ch}
 
 <script>
 const DATA = [["مِنْ","min","de, provenant de",3226],["اللهّٰ","Allah","Allah (Dieu)",2699],["لاَ","laa","non, ne...pas",2323],["فِي","fii","dans, en",1701],["إِنَّ","inna","certes, en vérité",1682],["قَالَ","qaala","il dit",1618],["الَّذِي","alladhii","celui qui, qui",1465],["عَلَى","'alaa","sur",1445],["لِ","li","pour, à",1407],["كَانَ","kaana","il était, il fut",1358],["مَا","maa","ce que, quoi",1174],["رَبّ","rabb","Seigneur",975],["مَنْ","man","qui, quiconque",824],["بِ","bi","avec, par",819],["إِلَى","ilaa","vers, jusqu'à",742],["إِنْ","in","si",694],["إِلاَّ","illaa","sauf, excepté",664],["أَنْ","an","que (subjonctif)",613],["آمَنَ","aamana","il crut, il eut la foi",537],["ذَلِكَ","dhaalika","cela, celui-là",479],["عَنْ","'an","au sujet de, de",465],["هُوَ","huwa","il, lui",464],["أَرْض","ard","terre",461],["إِذَا","idhaa","quand, lorsque",423],["قَدْ","qad","déjà, certes",406],["يَوْم","yawm","jour",405],["قَوْم","qawm","peuple",383],["آيَة","aaya","signe, verset",382],["عَلِمَ","'alima","il sut",382],["هُمْ","hum","ils, eux",370],["أَنَّ","anna","que (fait que)",366],["كُلّ","kull","tout, chaque",359],["لَمْ","lam","ne...pas (passé)",348],["ثُمَّ","thumma","puis, ensuite",341],["جَعَلَ","ja'ala","il fit, il établit",340],["رَسُول","rasuul","messager",332],["عَذَاب","'adhaab","châtiment",322],["سَمَاء","samaa'","ciel",310],["نَفْس","nafs","âme, soi-même",295],["كَفَرَ","kafara","il mécrut",289],["شَيْء","shay'","chose",283],["أَوْ","aw","ou",280],["جَاءَ","jaa'a","il vint",278],["عَمِلَ","'amila","il fit, il œuvra",276],["لَوْ","law","si (hypothétique)",276],["هَذَا","haadhaa","ceci, celui-ci",274],["آتَى","aataa","il donna",271],["رَأَى","ra'aa","il vit",271],["بَيْن","bayn","entre",266],["أَتَى","ataa","il vint, il apporta",264],["كِتَاب","kitaab","livre",260],["حَقّ","haqq","vérité, droit",247],["قَبْل","qabl","avant",242],["نَاس","naas","les gens",241],["إِذْ","idh","quand (passé)",239],["شَاءَ","shaa'a","il voulut",236],["أُولَئِكَ","ulaa'ika","ceux-là",208],["مُؤْمِن","mu'min","croyant",202],["بَعْدَ","ba'da","après",199],["عِنْدَ","'inda","auprès de, chez",197],["خَلَقَ","khalaqa","il créa",184],["أَنْزَلَ","anzala","il fit descendre, il révéla",183],["خَيْر","khayr","meilleur, bien",178],["سَبِيل","sabiil","chemin, voie",176],["كَذَّبَ","kadhdhaba","il traita de menteur",176],["دَعَا","da'aa","il invoqua, il appela",170],["أَمْر","amr","ordre, affaire",166],["اتَّقَى","ittaqaa","il craignit (Allah)",166],["لَمَّا","lammaa","quand, lorsque",165],["مَعَ","ma'a","avec",164],["عَلِيم","'aliim","omniscient",163],["بَعْض","ba'd","une partie, certains",157],["آخِر","aakhir","dernier, au-delà",155],["إِلَه","ilaah","dieu",147],["جَنَّة","janna","jardin, paradis",147],["غَيْر","ghayr","autre que",147],["نَار","naar","feu",145],["دُونَ","duuna","en dehors de, sans",144],["هَدَى","hadaa","il guida",144],["أَيُّهَا","ayyuhaa","ô (vocatif)",143],["حَتَّى","hattaa","jusqu'à",142],["أَرَادَ","araada","il voulut",139],["أَمْ","am","ou (bien)",137],["مُوسَى","muusaa","Moïse",136],["اتَّبَعَ","ittaba'a","il suivit",136],["أَنْتُمْ","antum","vous",135],["قَلْب","qalb","cœur",132],["عَبْد","'abd","serviteur, esclave",131],["أَرْسَلَ","arsala","il envoya",130],["لَكِنْ","laakin","mais",130],["ظَالِم","dhaalim","injuste",129],["كَافِرُونَ","kaafiruun","mécréants",129],["لَعَلَّ","la'alla","peut-être, afin que",129],["أَخَذَ","akhadha","il prit, il saisit",127],["أَهْل","ahl","famille, gens",127],["بَلْ","bal","mais plutôt",127],["اتَّخَذَ","ittakhadha","il prit (pour soi)",124],["عَبَدَ","'abada","il adora",122],["عَظِيم","'adhiim","immense, grandiose",120],["يَد","yad","main",120],["مُبِين","mubiin","clair, évident",119],["رَحِيم","rahiim","miséricordieux",116],["دُنْيَا","dunyaa","ce bas monde",115],["ذُو","dhuu","possesseur de",115],["رَحْمَة","rahma","miséricorde",114],["ظَلَمَ","dhalama","il opprima, il fit tort",110],["سَأَلَ","sa'ala","il demanda",106],["لَنْ","lan","ne...jamais (futur)",106],["وَجَدَ","wajada","il trouva",106],["أَجْر","ajr","récompense",105],["عِلْم","'ilm","science, savoir",105],["عَزِيز","'aziiz","puissant, tout-puissant",101],["أَخْرَجَ","akhraja","il fit sortir",99],["حَكِيم","hakiim","sage",97],["كَ","ka","comme",95],["أَكَلَ","akala","il mangea",93],["هَلْ","hal","est-ce que",93],["دِين","diin","religion, jugement",92],["قَوْل","qawl","parole, dire",92],["غَفُور","ghafuur","très pardonneur",91],["لَيْسَ","laysa","n'est pas",89],["شَيْطَان","shaytaan","démon, Satan",88],["فَعَلَ","fa'ala","il fit",88],["مِثْل","mithl","semblable, comme",88],["مَلَك","malak","ange",88],["نَظَرَ","nadhara","il regarda",87],["مَال","maal","richesse, bien",86],["نَحْنُ","nahnu","nous",86],["وَلِيّ","waliyy","protecteur, allié",86],["هُدًى","hudan","guidée, droit chemin",85],["ذَكَرَ","dhakara","il se souvint, il mentionna",84],["فَضْل","fadl","grâce, faveur",84],["لَيْل","layl","nuit",84],["خَافَ","khaafa","il craignit",83],["صَلاَة","salaah","prière",83],["قَتَلَ","qatala","il tua",83],["كَيْفَ","kayfa","comment",83],["أَوَّل","awwal","premier, ancien",82],["أَنْتَ","anta","tu, toi",81],["أَكْثَر","akthar","la plupart, plus",80],["بَنِينَ","baniin","fils, enfants",80],["رَجَعَ","raja'a","il retourna",79],["أَصْحَاب","ashaab","compagnons, gens de",78],["تَوَلَّى","tawallaa","il se détourna",78],["سَمِعَ","sami'a","il entendit",78],["أَمَرَ","amara","il ordonna",77],["جَهَنَّم","jahannam","Enfer",77],["حَيَاة","hayaah","vie",76],["دَخَلَ","dakhala","il entra",76],["ذِكْر","dhikr","rappel, mention",76],["زَوْج","zawj","époux, épouse, paire",76],["أَخ","akh","frère",75],["مِثْل","mithl","pareil à",75],["نَبِيّ","nabiyy","prophète",75],["أَحَد","ahad","quelqu'un, un seul",74],["خَالِد","khaalid","éternel, immortel",74],["فِرْعَوْن","fir'awn","Pharaon",74],["جَزَى","jazaa","il récompensa",73],["عَالَمِينَ","'aalamiin","mondes, univers",73],["أَطَاعَ","ataa'a","il obéit",72],["أَلِيم","aliim","douloureux",72],["أَوْحَى","awhaa","il révéla, il inspira",72],["وَجْه","wajh","visage",72],["أَشْرَكَ","ashraka","il associa (à Allah)",71],["أَلْقَى","alqaa","il jeta",71],["إِنْسَان","insaan","être humain",71],["بَيِّنَة","bayyina","preuve évidente",71],["عَمَل","'amal","œuvre, action",70],["آخَر","aakhar","autre",70],["أَيّ","ayy","quel, lequel",70],["قُرْآن","qur'aan","Coran",70],["قَلِيل","qaliil","peu",70],["قِيَامَة","qiyaama","résurrection",70],["وَعَدَ","wa'ada","il promit",69],["إِبْرَاهِيم","ibraahiim","Abraham",68],["أَنَا","anaa","je, moi",68],["أَنْفَقَ","anfaqa","il dépensa",66],["يَوْمَئِذٍ","yawma'idhin","ce jour-là",65],["بَيْت","bayt","maison",65],["صَالِح","saalih","vertueux, bon",65],["غَفَرَ","ghafara","il pardonna",65],["يَمِين","yamiin","droite, serment",64],["آبَاء","aabaa'","ancêtres, pères",64],["أَحَبَّ","ahabba","il aima",64],["أَصَابَ","asaaba","il frappa, il atteignit",64],["أَضَلَّ","adalla","il égara",64],["أُمَّة","umma","communauté, nation",64],["هِيَ","hiya","elle",64],["تَابَ","taaba","il se repentit",63],["كَثِير","kathiir","beaucoup, nombreux",63],["مَاء","maa'","eau",63],["ابْن","ibn","fils",63],["صَالِحَات","saalihaat","bonnes œuvres",62],["كَسَبَ","kasaba","il acquit, il gagna",62],["نَزَّلَ","nazzala","il fit descendre",62],["تَلاَ","talaa","il récita",61],["رَزَقَ","razaqa","il pourvut",61],["صَادِق","saadiq","véridique",59],["قَضَى","qadaa","il décréta, il décida",59],["نِسَاء","nisaa'","femmes",59],["نَصَرَ","nasara","il secourut",59],["صَبَرَ","sabara","il patienta",58],["نَذِير","nadhiir","avertisseur",58],["جَرَى","jaraa","il coula",57],["رَحْمَٰن","rahmaan","Tout Miséricordieux",57],["عَيْن","'ayn","source, œil",57],["قَرْيَة","qarya","cité, village",57],["نَهَار","nahaar","jour (journée)",57],["شَدِيد","shadiid","sévère, intense",56],["شَهِيد","shahiid","témoin",56],["مَسَّ","massa","il toucha",56],["وَلَد","walad","enfant, fils",56],["أَمَّا","ammaa","quant à",55],["أَنْتُمَا","antumaa","vous deux",55],["رِزْق","rizq","subsistance",55],["ضَرَبَ","daraba","il frappa, il cita",55],["أَقَامَ","aqaama","il établit",54],["قَاتَلَ","qaatala","il combattit",54],["نَهْر","nahr","rivière",54],["جَمِيع","jamii'","tous ensemble",53],["خَرَجَ","kharaja","il sortit",53],["ضَلَّ","dalla","il s'égara",53],["أَجَل","ajal","terme, échéance",52],["بَعَثَ","ba'atha","il ressuscita, il envoya",52],["خَلْق","khalq","création",52],["مُجْرِم","mujrim","criminel",52],["أَحْيَا","ahyaa","il fit vivre",51],["أَهْلَكَ","ahlaka","il détruisit",51],["بَصِير","basiir","voyant, clairvoyant",51],["تَحْتَ","tahta","sous",51],["تَذَكَّرَ","tadhakkara","il se souvint",51],["سُوء","suu'","mal, mauvais",50],["عَدُوّ","'aduww","ennemi",50],["مَوْت","mawt","mort",50],["نِعْمَة","ni'ma","bienfait, grâce",50],["افْتَرَى","iftaraa","il inventa (un mensonge)",50],["أَعْلَم","a'lam","plus savant",49],["زَادَ","zaada","il augmenta",49],["عَقَلَ","'aqala","il comprit, il raisonna",49],["غَيْب","ghayb","invisible, inconnu",49],["كَتَبَ","kataba","il écrivit, il prescrivit",49],["مُتَّقِينَ","muttaqiin","les pieux",49],["وَعْد","wa'd","promesse",49],["بَصَر","basar","vue, regard",48],["دَار","daar","demeure",48],["سَاعَة","saa'a","l'Heure (jugement dernier)",48],["مُلْك","mulk","royaume, souveraineté",48],["سَمِيع","samii'","qui entend tout",47],["ظَنَّ","dhanna","il pensa, il supposa",47],["أَب","ab","père",46],["شَكَرَ","shakara","il fut reconnaissant",46],["نَبَّأَ","nabba'a","il informa",46],["هَؤُلاَء","haa'ulaa'","ceux-ci",46],["أُولِي","ulii","possesseurs de",45],["إِيمَان","iimaan","foi",45],["حَكَمَ","hakama","il jugea",45],["خَبِير","khabiir","bien informé",45],["صِرَاط","siraat","voie, chemin",45],["قَدِير","qadiir","tout-puissant",45],["يَذَرُ","yadharu","il laisse, il délaisse",45],["أَنْذَرَ","andhara","il avertit",44],["حَسِبَ","hasiba","il pensa, il crut",44],["شَهِدَ","shahida","il témoigna",44],["صَدْر","sadr","poitrine",44],["مُشْرِك","mushrik","polythéiste, associateur",44],["مَلَكَتْ","malakat","elle posséda",44],["نَادَى","naadaa","il appela",44],["إِسْرَائِيل","israa'iil","Israël",43],["تِلْكَ","tilka","celle-là",43],["حَمْد","hamd","louange",43],["نُوح","nuuh","Noé",43],["نُور","nuur","lumière",43],["مَلَكَ","malaka","il posséda, il eut pouvoir",42],["أُدْخِلَ","udkhila","il fut admis",42],["جَزَاء","jazaa'","rétribution",42],["سَبَّحَ","sabbaha","il glorifia",42],["سَلاَم","salaam","paix",42],["سَوْفَ","sawfa","bientôt (futur)",42],["اسْتَطَاعَ","istataa'a","il put, il fut capable",41],["بَحْر","bahr","mer",41],["حَمَلَ","hamala","il porta",41],["سُبْحَان","subhaan","gloire à (Allah)",41],["عَذَّبَ","'adhdhaba","il châtia",41],["عَلَّمَ","'allama","il enseigna",41],["فَ","fa","alors, donc",41],["فَوْقَ","fawqa","au-dessus de",40],["أَرَى","araa","il montra",40],["بِئْسَ","bi'sa","quel mauvais...",40],["بَلَغَ","balagha","il atteignit",40],["تَرَكَ","taraka","il laissa",40],["تَوَكَّلَ","tawakkala","il se remit à (Allah)",40],["خَشِيَ","khashiya","il craignit",40],["شَرِيك","shariik","associé",40],["كَبِير","kabiir","grand",40],["وَيْل","wayl","malheur à",40],["اسْتَغْفَرَ","istaghfara","il demanda pardon",40],["اسْتَكْبَرَ","istakbara","il s'enorgueillit",40],["اهْتَدَى","ihtadaa","il se guida (bien)",39],["إِذْن","idhn","permission",39],["جَبَل","jabal","montagne",39]];
+const EN = ["from","Allah (God)","no, not","in","indeed, truly","he said","who, the one who","on, upon","for, to","he was","what, that which","Lord","who, whoever","with, by","to, towards","if","except","that (+ verb)","he believed","that, that one","about, away from","he, him","earth","when","already, indeed","day","people, nation","sign, verse","he knew","they, them","that (the fact that)","all, every","did not (past)","then, afterwards","he made, he set","messenger","punishment","sky, heaven","soul, self","he disbelieved","thing","or","he came","he did, he worked","if (hypothetical)","this, this one","he gave","he saw","between","he came, he brought","book","truth, right","before","people, mankind","when (in the past)","he willed","those","believer","after","with, near","he created","he sent down, he revealed","better, good","way, path","he denied (the truth)","he called, he invoked","command, matter","he feared (Allah)","when, as soon as","with, together with","all-knowing","some, part","last, the Hereafter","god, deity","garden, paradise","other than","fire","besides, apart from","he guided","O (calling)","until","he wanted, he intended","or (rather)","Moses","he followed","you (plural)","heart","servant, slave","he sent","but","wrongdoer, unjust","disbelievers","perhaps, so that","he took, he seized","family, people of","rather, but","he took (for himself)","he worshipped","great, mighty","hand","clear, manifest","merciful","this world","possessor of","mercy","he wronged","he asked","will never (future)","he found","reward","knowledge","mighty, almighty","he brought out","wise","like, as","he ate","is it? (question)","religion, judgment","word, saying","most forgiving","is not","devil, Satan","he did","similar, like","angel","he looked","wealth, property","we","protector, ally","guidance, right path","he remembered, he mentioned","grace, bounty","night","he feared","prayer","he killed","how","first, former","you (singular)","most, more","sons, children","he returned","companions, people of","he turned away","he heard","he commanded","Hell","life","he entered","remembrance, mention","spouse, pair","brother","the like of","prophet","anyone, one","abiding forever","Pharaoh","he rewarded","worlds, universe","he obeyed","painful","he revealed, he inspired","face","he associated (partners with Allah)","he threw, he cast","human being","clear proof","deed, action","other, another","which, whichever","Quran","few, little","resurrection","he promised","Abraham","I, me","he spent","on that day","house","righteous, good","he forgave","right hand, oath","forefathers, fathers","he loved","he struck, he afflicted","he led astray","community, nation","she, her","he repented","many, much","water","son","good deeds","he earned","he sent down (gradually)","he recited","he provided","truthful","he decreed, he decided","women","he helped","he was patient","warner","it flowed","the Most Merciful","spring, eye","town, village","daytime","severe, intense","witness","he touched","child, son","as for","you two","provision","he struck, he set forth (an example)","he established","he fought","river","all together","he went out","he went astray","term, appointed time","he raised, he sent","creation","criminal","he gave life","he destroyed","all-seeing","under","he took heed","evil, bad","enemy","death","blessing, favour","he fabricated (a lie)","more knowing","he increased","he understood, he reasoned","the unseen","he wrote, he prescribed","the God-fearing","promise","sight, eyes","home, abode","the Hour (Judgment Day)","kingdom, dominion","all-hearing","he thought, he assumed","father","he was grateful","he informed","these","possessors of","faith","he judged","all-aware","path, way","all-powerful","he leaves, he abandons","he warned","he reckoned, he supposed","he bore witness","chest, breast","polytheist","she possessed","he called out","Israel","that (feminine)","praise","Noah","light","he owned, he had power","he was admitted","recompense","he glorified","peace","soon, will (future)","he was able","sea","he carried","glory be to (Allah)","he punished","he taught","so, then","above","he showed","how evil...","he reached","he left","he relied on (Allah)","he stood in awe, he dreaded","partner","great, big","woe to","he asked forgiveness","he was arrogant","he was rightly guided","permission","mountain"];
 const TOTAL_WORDS_QURAN = 77429;
 const PER = 20, NCH = Math.ceil(DATA.length / PER);
-const W = DATA.map((d, i) => ({ id: i, n: i + 1, ar: d[0], ph: d[1], fr: d[2], occ: d[3], ch: Math.floor(i / PER) }));
+const W = DATA.map((d, i) => ({ id: i, n: i + 1, ar: d[0], ph: d[1], fr: d[2], en: EN[i], occ: d[3], ch: Math.floor(i / PER) }));
 const MAX_COVER = W.reduce((s, w) => s + w.occ, 0);
+
+/* ---------- langues / languages ---------- */
+const STR = {
+  fr: {
+    brand: 'Les 300 mots du Coran', home: 'Accueil', settings: 'Réglages', switchTo: 'EN', switchLabel: 'English version',
+    streak: 'Série de jours', xpTitle: "Points d'expérience", level: 'Niveau', lvShort: 'Niv.',
+    levelUp: n => 'Niveau ' + n + ' atteint !', goalDone: n => 'Objectif du jour rempli. Série : ' + n + ' j',
+    noTTS: "Ce navigateur ne lit pas l'audio arabe", noListen: "L'écoute nécessite la synthèse vocale du navigateur",
+    heroTitle: 'Apprenez les 300 mots qui reviennent le plus dans le Coran',
+    heroP: (c, p) => `${c} chapitres de ${p} mots, classés du plus fréquent au moins fréquent. Écoutez, retournez les cartes, gagnez des étoiles. Chaque mot maîtrisé vous fait reconnaître une part plus grande du texte.`,
+    startBtn: (k, c) => `${k ? 'Continuer' : 'Commencer'} · chapitre ${c}`, lexBtn: 'Lexique',
+    coverEyebrow: 'Ce que vous reconnaissez du Coran', coverOf: n => `des ${n} mots du texte`,
+    ceil: p => `Plafond : les 300 mots couvrent ${p} %`,
+    coverNote: p => `Les 300 mots couvrent ${p} % des occurrences (zone claire). Un mot compte quand il est maîtrisé : 3 bonnes réponses.`,
+    pct: v => v.toFixed(1).replace('.', ',') + ' %',
+    statKnown: 'mots maîtrisés / 300', statLevel: 'niveau', statToday: "XP aujourd'hui",
+    freePractice: 'Entraînement libre', blitzT: 'Défi 60 secondes', blitzD: r => 'Le plus de bonnes réponses possible. Record : ' + r,
+    revT: 'Réviser mes erreurs', revD: n => n ? n + ' mot' + (n > 1 ? 's' : '') + ' à revoir' : 'Aucune erreur pour le moment',
+    lexT: 'Lexique complet', lexD: 'Les 300 mots, avec audio et recherche',
+    chaptersH: n => `Les ${n} chapitres`, chaptersHint: "Obtenez au moins 1 étoile à l'épreuve pour ouvrir le chapitre suivant",
+    chapter: 'Chapitre', locked: ' (verrouillé)', range: (a, b) => `Mots ${a} à ${b}`,
+    footer: "Liste établie à partir du corpus coranique (77 429 mots). Les mots sont donnés sous une forme de référence : dans le texte, ils apparaissent conjugués ou déclinés. L'audio utilise la voix arabe de votre appareil ; elle sert de repère de prononciation et ne remplace pas l'écoute d'un récitateur.",
+    listenTo: 'Écouter ', times: n => n + ' fois', masteryT: m => `Maîtrise ${m}/5`,
+    modes: [
+      ['Cartes', 'Découvrez chaque mot, écoutez-le, retournez la carte', '+2 XP / carte'],
+      ['Arabe → français', 'Lisez le mot arabe, trouvez son sens', '+10 XP / bonne réponse'],
+      ['Français → arabe', 'Lisez le sens, trouvez le mot arabe', '+10 XP / bonne réponse'],
+      ['Écoute', 'Écoutez la voix et reconnaissez le mot', '+12 XP / bonne réponse'],
+      ['Paires', 'Reliez chaque mot arabe à son sens', '+5 XP / paire'],
+      ['Épreuve du chapitre', "15 questions, 3 vies. Gagnez jusqu'à 3 étoiles", 'Bonus +50 XP']],
+    allChapters: 'Tous les chapitres', masteredOf: (k, n) => `${k}/${n} mots maîtrisés`, wordsH: n => `Les ${n} mots`, playAll: 'Tout écouter',
+    quit: 'Quitter', lives: n => n + ' vies', qAr: 'Que signifie ce mot ?', qFr: 'Quel mot arabe signifie…',
+    qListen: 'Écoutez, puis choisissez le mot entendu', listenWord: 'Écouter le mot', listen: 'Écouter', slower: 'Plus lentement',
+    praise: ['Bravo !', 'Excellent !', 'Parfait !', 'Bien vu !'], answer: 'Réponse :', cont: 'Continuer',
+    keysQ: 'Raccourcis : touches 1 à 4, puis Entrée',
+    wordNo: (n, o) => `Mot n° ${n} · ${o} occurrences`, tapFlip: 'Touchez pour retourner', flipCard: 'Retourner la carte',
+    again2: 'À revoir', knew: 'Je le savais', show: 'Voir la réponse', keysC: 'Raccourcis : Espace pour retourner, ← à revoir, → je le savais',
+    round: (r, n) => `Manche ${r}/${n}`, pairsHint: 'Touchez un mot arabe, puis son sens', errors: 'Erreurs :',
+    cardsDone: 'Cartes terminées', knownL: 'connus', masteredL: 'maîtrisés', flawless: 'Sans faute !', allPairs: 'Toutes les paires trouvées',
+    pairsL: 'paires', errorsL: 'erreurs', newRecord: 'Nouveau record !', timeUp: 'Temps écoulé', correctL: 'bonnes réponses', recordL: 'record',
+    noLives: 'Plus de vies', passed: 'Épreuve réussie', almost: 'Presque…',
+    subFail: "Révisez les mots manqués, puis retentez l'épreuve.", subZero: 'Il faut 60 % de bonnes réponses pour gagner une étoile.',
+    subUnlocked: n => `Le chapitre ${n} est maintenant ouvert.`,
+    excellent: 'Excellent !', wellDone: 'Bien joué', keepGoing: 'Continuez, ça rentre', bestCombo: 'meilleur combo',
+    toReview: 'À revoir', backCh: 'Retour au chapitre', again: 'Rejouer',
+    lexH: 'Lexique des 300 mots', byFreq: 'Classés par fréquence', searchPh: 'Chercher en français, en phonétique ou en arabe',
+    filters: ['Tous', 'Maîtrisés', 'À apprendre', 'Erreurs'], noMatch: 'Aucun mot ne correspond.',
+    close: 'Fermer', language: 'Langue', voice: 'Voix arabe',
+    noVoice: "Aucune voix arabe trouvée sur cet appareil. Sur Mac : Réglages Système › Accessibilité › Contenu énoncé › Voix du système › ajouter une voix arabe. Sur iPhone : Réglages › Accessibilité › Contenu énoncé › Voix › Arabe. Sur Android : installez la voix arabe de Google dans les paramètres de synthèse vocale. Chrome sur ordinateur propose aussi une voix Google arabe.",
+    noSynth: 'Ce navigateur ne propose pas de synthèse vocale.', rate: 'Vitesse de lecture :', test: 'Tester :', num: v => v.toFixed(2).replace('.', ','),
+    goal: 'Objectif quotidien', perDay: g => g + ' XP par jour', sfx: 'Effets sonores', sfxD: 'Sons de bonne et mauvaise réponse',
+    unlock: 'Ouvrir tous les chapitres', unlockD: 'Pour réviser librement sans passer les épreuves',
+    storage: 'La progression est enregistrée dans ce navigateur, sur cet appareil.', reset: 'Effacer ma progression',
+    resetQ: 'Effacer XP, étoiles et maîtrise ?', cancel: 'Annuler', erase: 'Effacer', erased: 'Progression effacée', loc: 'fr-FR'
+  },
+  en: {
+    brand: 'The 300 Words of the Quran', home: 'Home', settings: 'Settings', switchTo: 'FR', switchLabel: 'Version française',
+    streak: 'Day streak', xpTitle: 'Experience points', level: 'Level', lvShort: 'Lv.',
+    levelUp: n => 'Level ' + n + ' reached!', goalDone: n => 'Daily goal reached. Streak: ' + n + ' d',
+    noTTS: "This browser can't play Arabic audio", noListen: "Listening mode needs the browser's speech synthesis",
+    heroTitle: 'Learn the 300 words that appear most often in the Quran',
+    heroP: (c, p) => `${c} chapters of ${p} words, from the most frequent to the least. Listen, flip the cards, earn stars. Every word you master lets you recognise a bigger share of the text.`,
+    startBtn: (k, c) => `${k ? 'Continue' : 'Start'} · chapter ${c}`, lexBtn: 'Glossary',
+    coverEyebrow: 'How much of the Quran you recognise', coverOf: n => `of the ${n} words in the text`,
+    ceil: p => `Ceiling: the 300 words cover ${p}%`,
+    coverNote: p => `The 300 words cover ${p}% of all occurrences (light zone). A word counts once it is mastered: 3 correct answers.`,
+    pct: v => v.toFixed(1) + '%',
+    statKnown: 'words mastered / 300', statLevel: 'level', statToday: 'XP today',
+    freePractice: 'Free practice', blitzT: '60-second challenge', blitzD: r => 'As many correct answers as you can. Record: ' + r,
+    revT: 'Review my mistakes', revD: n => n ? n + ' word' + (n > 1 ? 's' : '') + ' to review' : 'No mistakes yet',
+    lexT: 'Full glossary', lexD: 'All 300 words, with audio and search',
+    chaptersH: n => `The ${n} chapters`, chaptersHint: 'Earn at least 1 star in the test to unlock the next chapter',
+    chapter: 'Chapter', locked: ' (locked)', range: (a, b) => `Words ${a} to ${b}`,
+    footer: 'List based on the Quranic corpus (77,429 words). Words are given in a reference form: in the text they appear conjugated or inflected. Audio uses your device’s Arabic voice; it is a pronunciation guide and does not replace listening to a reciter.',
+    listenTo: 'Listen to ', times: n => n + ' times', masteryT: m => `Mastery ${m}/5`,
+    modes: [
+      ['Cards', 'Discover each word, listen to it, flip the card', '+2 XP / card'],
+      ['Arabic → English', 'Read the Arabic word, find its meaning', '+10 XP / correct answer'],
+      ['English → Arabic', 'Read the meaning, find the Arabic word', '+10 XP / correct answer'],
+      ['Listening', 'Listen to the voice and recognise the word', '+12 XP / correct answer'],
+      ['Pairs', 'Match each Arabic word with its meaning', '+5 XP / pair'],
+      ['Chapter test', '15 questions, 3 lives. Earn up to 3 stars', 'Bonus +50 XP']],
+    allChapters: 'All chapters', masteredOf: (k, n) => `${k}/${n} words mastered`, wordsH: n => `The ${n} words`, playAll: 'Play all',
+    quit: 'Quit', lives: n => n + ' lives', qAr: 'What does this word mean?', qFr: 'Which Arabic word means…',
+    qListen: 'Listen, then pick the word you heard', listenWord: 'Play the word', listen: 'Listen', slower: 'Slower',
+    praise: ['Well done!', 'Excellent!', 'Perfect!', 'Nice one!'], answer: 'Answer:', cont: 'Continue',
+    keysQ: 'Shortcuts: keys 1 to 4, then Enter',
+    wordNo: (n, o) => `Word #${n} · ${o} occurrences`, tapFlip: 'Tap to flip', flipCard: 'Flip the card',
+    again2: 'Review again', knew: 'I knew it', show: 'Show answer', keysC: 'Shortcuts: Space to flip, ← review again, → I knew it',
+    round: (r, n) => `Round ${r}/${n}`, pairsHint: 'Tap an Arabic word, then its meaning', errors: 'Mistakes:',
+    cardsDone: 'Cards complete', knownL: 'known', masteredL: 'mastered', flawless: 'Flawless!', allPairs: 'All pairs found',
+    pairsL: 'pairs', errorsL: 'mistakes', newRecord: 'New record!', timeUp: "Time's up", correctL: 'correct answers', recordL: 'record',
+    noLives: 'Out of lives', passed: 'Test passed', almost: 'Almost…',
+    subFail: 'Review the words you missed, then try the test again.', subZero: 'You need 60% correct answers to earn a star.',
+    subUnlocked: n => `Chapter ${n} is now unlocked.`,
+    excellent: 'Excellent!', wellDone: 'Well done', keepGoing: "Keep going, it's sinking in", bestCombo: 'best combo',
+    toReview: 'To review', backCh: 'Back to chapter', again: 'Play again',
+    lexH: 'Glossary of the 300 words', byFreq: 'Sorted by frequency', searchPh: 'Search in English, transliteration or Arabic',
+    filters: ['All', 'Mastered', 'To learn', 'Mistakes'], noMatch: 'No word matches.',
+    close: 'Close', language: 'Language', voice: 'Arabic voice',
+    noVoice: 'No Arabic voice found on this device. On Mac: System Settings › Accessibility › Spoken Content › System Voice › add an Arabic voice. On iPhone: Settings › Accessibility › Spoken Content › Voices › Arabic. On Android: install Google’s Arabic voice in the text-to-speech settings. Chrome on desktop also offers a Google Arabic voice.',
+    noSynth: 'This browser does not support speech synthesis.', rate: 'Speech rate:', test: 'Test:', num: v => v.toFixed(2),
+    goal: 'Daily goal', perDay: g => g + ' XP per day', sfx: 'Sound effects', sfxD: 'Sounds for right and wrong answers',
+    unlock: 'Unlock all chapters', unlockD: 'To review freely without passing the tests',
+    storage: 'Your progress is saved in this browser, on this device.', reset: 'Reset my progress',
+    resetQ: 'Reset XP, stars and mastery?', cancel: 'Cancel', erase: 'Reset', erased: 'Progress reset', loc: 'en-US'
+  }
+};
+let L = 'fr';
+const t = (k, ...a) => { const s = k in STR[L] ? STR[L][k] : STR.fr[k]; return typeof s === 'function' ? s(...a) : s; };
+const MK = () => L === 'en' ? 'en' : 'fr';
+const M = w => w[MK()];
+const nf = n => n.toLocaleString(t('loc'));
 
 /* ---------- icons ---------- */
 const IC = {
@@ -299,9 +415,10 @@ const yesterday = () => { const d = new Date(Date.now() - 864e5); return d.getFu
 
 /* ---------- state ---------- */
 const KEY = 'coran300.v1';
-const DEF = { xp: 0, m: {}, stars: {}, wrong: [], streak: { n: 0, last: '' }, day: { d: '', xp: 0 }, blitz: 0, rate: 0.75, sfx: true, unlockAll: false, voice: '', goal: 50 };
+const DEF = { xp: 0, m: {}, stars: {}, wrong: [], streak: { n: 0, last: '' }, day: { d: '', xp: 0 }, blitz: 0, rate: 0.75, sfx: true, unlockAll: false, voice: '', goal: 50, lang: '' };
 let S = (() => { try { const r = JSON.parse(localStorage.getItem(KEY)); return Object.assign({}, DEF, r || {}); } catch (e) { return Object.assign({}, DEF); } })();
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+L = S.lang || (/^fr/i.test(navigator.language || 'fr') ? 'fr' : 'en');
 
 const mastery = id => S.m[id] || 0;
 const isKnown = id => mastery(id) >= 3;
@@ -322,8 +439,8 @@ function addXp(n) {
   S.day.xp += n;
   if (S.streak.last !== today()) { S.streak.n = S.streak.last === yesterday() ? S.streak.n + 1 : 1; S.streak.last = today(); }
   save(); renderChips();
-  if (level() > before) toast('Niveau ' + level() + ' atteint !');
-  else if (!hadGoal && S.day.xp >= S.goal) toast('Objectif du jour rempli. Série : ' + S.streak.n + ' j');
+  if (level() > before) toast(t('levelUp', level()));
+  else if (!hadGoal && S.day.xp >= S.goal) toast(t('goalDone', S.streak.n));
 }
 function mark(id, ok) {
   const v = mastery(id);
@@ -343,7 +460,7 @@ function loadVoices() {
 }
 if ('speechSynthesis' in window) { loadVoices(); speechSynthesis.onvoiceschanged = () => { loadVoices(); if (document.getElementById('voiceSel')) openSettings(); }; }
 function speak(text, rate) {
-  if (!('speechSynthesis' in window)) { toast("Ce navigateur ne lit pas l'audio arabe"); return; }
+  if (!('speechSynthesis' in window)) { toast(t('noTTS')); return; }
   try {
     speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text);
@@ -362,10 +479,10 @@ function sfx(type) {
     actx = actx || new (window.AudioContext || window.webkitAudioContext)();
     const notes = { ok: [660, 880], ko: [220, 170], win: [523, 659, 784, 1046], tap: [500] }[type];
     notes.forEach((f, i) => {
-      const o = actx.createOscillator(), g = actx.createGain(), t = actx.currentTime + i * 0.09;
+      const o = actx.createOscillator(), g = actx.createGain(), tm = actx.currentTime + i * 0.09;
       o.type = type === 'ko' ? 'triangle' : 'sine'; o.frequency.value = f;
-      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.18, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
-      o.connect(g).connect(actx.destination); o.start(t); o.stop(t + 0.25);
+      g.gain.setValueAtTime(0.0001, tm); g.gain.exponentialRampToValueAtTime(0.18, tm + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, tm + 0.22);
+      o.connect(g).connect(actx.destination); o.start(tm); o.stop(tm + 0.25);
     });
   } catch (e) {}
 }
@@ -391,17 +508,27 @@ function badge(c, state, pct) {
 const starsHtml = n => [0, 1, 2].map(i => `<span class="${i < n ? 'on' : ''}">${ic('star')}</span>`).join('');
 const chWords = c => W.slice(c * PER, c * PER + PER);
 const chMastery = c => chWords(c).filter(w => isKnown(w.id)).length / chWords(c).length;
-const dots = id => `<div class="dots" title="Maîtrise ${mastery(id)}/5">${[1, 2, 3, 4, 5].map(i => `<i class="${mastery(id) >= i ? 'on' : ''}"></i>`).join('')}</div>`;
+const dots = id => `<div class="dots" title="${t('masteryT', mastery(id))}">${[1, 2, 3, 4, 5].map(i => `<i class="${mastery(id) >= i ? 'on' : ''}"></i>`).join('')}</div>`;
 
+function applyLang() {
+  document.documentElement.lang = L;
+  document.title = t('brand');
+  document.getElementById('brandName').textContent = t('brand');
+  document.getElementById('homeBtn').setAttribute('aria-label', t('home'));
+  document.getElementById('setBtn').setAttribute('aria-label', t('settings'));
+  const lb = document.getElementById('langBtn'); lb.textContent = t('switchTo'); lb.setAttribute('aria-label', t('switchLabel'));
+}
+function setLang(l) { L = l; S.lang = l; save(); applyLang(); render(); }
 function renderChips() {
   document.getElementById('chips').innerHTML =
-    `<span class="chip gold" title="Série de jours">${ic('flame')}<span class="tnum">${streakNow()}</span></span>
-     <span class="chip lapis" title="Points d'expérience">${ic('bolt')}<span class="tnum">${S.xp}</span></span>
-     <span class="chip" title="Niveau">Niv. ${level()}</span>`;
+    `<span class="chip gold" title="${t('streak')}">${ic('flame')}<span class="tnum">${streakNow()}</span></span>
+     <span class="chip lapis" title="${t('xpTitle')}">${ic('bolt')}<span class="tnum">${S.xp}</span></span>
+     <span class="chip" title="${t('level')}">${t('lvShort')} ${level()}</span>`;
 }
 document.getElementById('setBtn').innerHTML = ic('gear');
 document.getElementById('setBtn').onclick = openSettings;
 document.getElementById('homeBtn').onclick = () => go('home');
+document.getElementById('langBtn').onclick = () => setLang(L === 'fr' ? 'en' : 'fr');
 
 /* ---------- routing ---------- */
 let view = { name: 'home' }, G = null, blitzTimer = null;
@@ -430,53 +557,54 @@ function renderHome() {
   const cov = coverage(), known = knownCount(), lv = level(), cur = currentChapter();
   const lvPct = (S.xp - need(lv)) / (need(lv + 1) - need(lv));
   const goalPct = Math.min(1, todayXp() / S.goal);
+  const ceil = (MAX_COVER / TOTAL_WORDS_QURAN * 100).toFixed(0);
   $app.innerHTML = `
   <section class="hero">
     <div class="hero-text">
       <div class="ar big" lang="ar">كَلِمَاتُ ٱلْقُرْآن</div>
-      <h1>Apprenez les 300 mots qui reviennent le plus dans le Coran</h1>
-      <p>${NCH} chapitres de ${PER} mots, classés du plus fréquent au moins fréquent. Écoutez, retournez les cartes, gagnez des étoiles. Chaque mot maîtrisé vous fait reconnaître une part plus grande du texte.</p>
+      <h1>${t('heroTitle')}</h1>
+      <p>${t('heroP', NCH, PER)}</p>
       <div class="row" style="justify-content:flex-start;margin-top:4px">
-        <button class="btn" id="contBtn">${ic('bolt')} ${known ? 'Continuer' : 'Commencer'} · chapitre ${cur + 1}</button>
-        <button class="btn ghost" data-go="lexique">${ic('book')} Lexique</button>
+        <button class="btn" id="contBtn">${ic('bolt')} ${t('startBtn', known, cur + 1)}</button>
+        <button class="btn ghost" data-go="lexique">${ic('book')} ${t('lexBtn')}</button>
       </div>
     </div>
     <div class="cover">
-      <div class="eyebrow">Ce que vous reconnaissez du Coran</div>
-      <div><span class="num tnum">${(cov * 100).toFixed(1).replace('.', ',')} %</span> <span class="muted">des ${TOTAL_WORDS_QURAN.toLocaleString('fr-FR')} mots du texte</span></div>
-      <div class="bar" title="Plafond : les 300 mots couvrent ${(MAX_COVER / TOTAL_WORDS_QURAN * 100).toFixed(0)} %"><i class="ceiling" style="width:${MAX_COVER / TOTAL_WORDS_QURAN * 100}%"></i><i style="width:${cov * 100}%"></i></div>
-      <div class="muted" style="font-size:13px">Les 300 mots couvrent ${(MAX_COVER / TOTAL_WORDS_QURAN * 100).toFixed(0)} % des occurrences (zone claire). Un mot compte quand il est maîtrisé : 3 bonnes réponses.</div>
+      <div class="eyebrow">${t('coverEyebrow')}</div>
+      <div><span class="num tnum">${t('pct', cov * 100)}</span> <span class="muted">${t('coverOf', nf(TOTAL_WORDS_QURAN))}</span></div>
+      <div class="bar" title="${t('ceil', ceil)}"><i class="ceiling" style="width:${MAX_COVER / TOTAL_WORDS_QURAN * 100}%"></i><i style="width:${cov * 100}%"></i></div>
+      <div class="muted" style="font-size:13px">${t('coverNote', ceil)}</div>
       <div class="statrow">
-        <div class="stat"><b class="tnum">${known}</b><span>mots maîtrisés / 300</span></div>
-        <div class="stat"><b class="tnum">${lv}</b><span>niveau</span><div class="bar gold" style="height:5px;margin-top:5px"><i style="width:${lvPct * 100}%"></i></div></div>
-        <div class="stat"><b class="tnum">${todayXp()}<small class="muted" style="font-size:13px">/${S.goal}</small></b><span>XP aujourd'hui</span><div class="bar" style="height:5px;margin-top:5px"><i style="width:${goalPct * 100}%;background:var(--good)"></i></div></div>
+        <div class="stat"><b class="tnum">${known}</b><span>${t('statKnown')}</span></div>
+        <div class="stat"><b class="tnum">${lv}</b><span>${t('statLevel')}</span><div class="bar gold" style="height:5px;margin-top:5px"><i style="width:${lvPct * 100}%"></i></div></div>
+        <div class="stat"><b class="tnum">${todayXp()}<small class="muted" style="font-size:13px">/${S.goal}</small></b><span>${t('statToday')}</span><div class="bar" style="height:5px;margin-top:5px"><i style="width:${goalPct * 100}%;background:var(--good)"></i></div></div>
       </div>
     </div>
   </section>
 
-  <div class="sec"><h2>Entraînement libre</h2></div>
+  <div class="sec"><h2>${t('freePractice')}</h2></div>
   <div class="quick">
-    <button class="qa gold" id="blitzBtn"><span class="ico">${ic('clock')}</span><span><b>Défi 60 secondes</b><small>Le plus de bonnes réponses possible. Record : ${S.blitz}</small></span></button>
-    <button class="qa" id="revBtn" ${S.wrong.length ? '' : 'disabled'}><span class="ico">${ic('repeat')}</span><span><b>Réviser mes erreurs</b><small>${S.wrong.length ? S.wrong.length + ' mot' + (S.wrong.length > 1 ? 's' : '') + ' à revoir' : 'Aucune erreur pour le moment'}</small></span></button>
-    <button class="qa" data-go="lexique"><span class="ico">${ic('search')}</span><span><b>Lexique complet</b><small>Les 300 mots, avec audio et recherche</small></span></button>
+    <button class="qa gold" id="blitzBtn"><span class="ico">${ic('clock')}</span><span><b>${t('blitzT')}</b><small>${t('blitzD', S.blitz)}</small></span></button>
+    <button class="qa" id="revBtn" ${S.wrong.length ? '' : 'disabled'}><span class="ico">${ic('repeat')}</span><span><b>${t('revT')}</b><small>${t('revD', S.wrong.length)}</small></span></button>
+    <button class="qa" data-go="lexique"><span class="ico">${ic('search')}</span><span><b>${t('lexT')}</b><small>${t('lexD')}</small></span></button>
   </div>
 
-  <div class="sec"><h2>Les ${NCH} chapitres</h2><span class="muted" style="font-size:14px">Obtenez au moins 1 étoile à l'épreuve pour ouvrir le chapitre suivant</span></div>
+  <div class="sec"><h2>${t('chaptersH', NCH)}</h2><span class="muted" style="font-size:14px">${t('chaptersHint')}</span></div>
   <div class="grid">
     ${Array.from({ length: NCH }, (_, c) => {
       const ws = chWords(c), un = unlocked(c), st = S.stars[c] || 0, pct = chMastery(c);
       const state = !un ? 'locked' : st >= 1 ? 'done' : 'open';
-      return `<button class="ch ${c === cur && un ? 'current' : ''}" data-ch="${c}" ${un ? '' : 'disabled aria-disabled="true"'} aria-label="Chapitre ${c + 1}${un ? '' : ' (verrouillé)'}">
+      return `<button class="ch ${c === cur && un ? 'current' : ''}" data-ch="${c}" ${un ? '' : 'disabled aria-disabled="true"'} aria-label="${t('chapter')} ${c + 1}${un ? '' : t('locked')}">
         ${un ? '' : `<span class="lock">${ic('lock')}</span>`}
         ${badge(c, state, pct)}
-        <span class="title">Chapitre ${c + 1}</span>
-        <span class="range tnum">Mots ${ws[0].n} à ${ws[ws.length - 1].n}</span>
+        <span class="title">${t('chapter')} ${c + 1}</span>
+        <span class="range tnum">${t('range', ws[0].n, ws[ws.length - 1].n)}</span>
         <span class="preview" lang="ar">${ws.slice(0, 3).map(w => w.ar).join(' · ')}</span>
         <span class="stars">${starsHtml(st)}</span>
       </button>`;
     }).join('')}
   </div>
-  <footer>Liste établie à partir du corpus coranique (77 429 mots). Les mots sont donnés sous une forme de référence : dans le texte, ils apparaissent conjugués ou déclinés. L'audio utilise la voix arabe de votre appareil ; elle sert de repère de prononciation et ne remplace pas l'écoute d'un récitateur.</footer>`;
+  <footer>${t('footer')}</footer>`;
   $app.querySelectorAll('[data-ch]').forEach(b => b.onclick = () => go('chapter', { c: +b.dataset.ch }));
   $app.querySelectorAll('[data-go]').forEach(b => b.onclick = () => go(b.dataset.go));
   document.getElementById('contBtn').onclick = () => go('chapter', { c: cur });
@@ -488,38 +616,32 @@ function renderHome() {
 function wordRow(w) {
   return `<div class="wrow">
     <span class="n tnum">#${w.n}</span>
-    <button class="play" data-say="${w.id}" aria-label="Écouter ${esc(w.ph)}">${ic('speaker')}</button>
+    <button class="play" data-say="${w.id}" aria-label="${t('listenTo')}${esc(w.ph)}">${ic('speaker')}</button>
     <div class="w-ar ar" lang="ar">${w.ar}</div>
-    <div class="w-fr"><div class="w-ph">${esc(w.ph)}</div>${esc(w.fr)}</div>
-    <div class="w-meta"><div class="w-occ tnum">${w.occ.toLocaleString('fr-FR')} fois</div>${dots(w.id)}</div>
+    <div class="w-fr"><div class="w-ph">${esc(w.ph)}</div>${esc(M(w))}</div>
+    <div class="w-meta"><div class="w-occ tnum">${t('times', nf(w.occ))}</div>${dots(w.id)}</div>
   </div>`;
 }
 function renderChapter() {
   const c = view.c, ws = chWords(c), st = S.stars[c] || 0, known = ws.filter(w => isKnown(w.id)).length;
-  const modes = [
-    ['cards', 'cards', 'Cartes', 'Découvrez chaque mot, écoutez-le, retournez la carte', '+2 XP / carte'],
-    ['ar2fr', 'ab', 'Arabe → français', 'Lisez le mot arabe, trouvez son sens', '+10 XP / bonne réponse'],
-    ['fr2ar', 'ba', 'Français → arabe', 'Lisez le sens, trouvez le mot arabe', '+10 XP / bonne réponse'],
-    ['listen', 'ear', 'Écoute', 'Écoutez la voix et reconnaissez le mot', '+12 XP / bonne réponse'],
-    ['pairs', 'puzzle', 'Paires', 'Reliez chaque mot arabe à son sens', '+5 XP / paire'],
-    ['exam', 'trophy', 'Épreuve du chapitre', '15 questions, 3 vies. Gagnez jusqu\'à 3 étoiles', 'Bonus +50 XP']
-  ];
+  const keys = [['cards', 'cards'], ['ar2fr', 'ab'], ['fr2ar', 'ba'], ['listen', 'ear'], ['pairs', 'puzzle'], ['exam', 'trophy']];
+  const modes = keys.map(([k, i], j) => [k, i].concat(t('modes')[j]));
   $app.innerHTML = `
-  <button class="back" id="bk">${ic('back')} Tous les chapitres</button>
+  <button class="back" id="bk">${ic('back')} ${t('allChapters')}</button>
   <div class="chhead">
     ${badge(c, st >= 1 ? 'done' : 'open', known / ws.length)}
     <div style="min-width:0">
-      <div class="eyebrow">Mots ${ws[0].n} à ${ws[ws.length - 1].n}</div>
-      <h1>Chapitre ${c + 1}</h1>
-      <div class="muted" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="stars" style="display:flex;color:var(--line)">${starsHtml(st).replace(/class="on"/g, 'class="on" style="color:var(--gold-bright)"')}</span> ${known}/${ws.length} mots maîtrisés</div>
+      <div class="eyebrow">${t('range', ws[0].n, ws[ws.length - 1].n)}</div>
+      <h1>${t('chapter')} ${c + 1}</h1>
+      <div class="muted" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="stars" style="display:flex;color:var(--line)">${starsHtml(st).replace(/class="on"/g, 'class="on" style="color:var(--gold-bright)"')}</span> ${t('masteredOf', known, ws.length)}</div>
     </div>
   </div>
   <div class="modes">
-    ${modes.map(([k, i, t, d, x]) => `<button class="mode ${k === 'exam' ? 'exam' : ''}" data-mode="${k}"><span class="ico">${ic(i)}</span><b>${t}</b><small>${d}</small><span class="xpbadge">${x}</span></button>`).join('')}
+    ${modes.map(([k, i, tt, d, x]) => `<button class="mode ${k === 'exam' ? 'exam' : ''}" data-mode="${k}"><span class="ico">${ic(i)}</span><b>${tt}</b><small>${d}</small><span class="xpbadge">${x}</span></button>`).join('')}
   </div>
-  <div class="sec"><h2>Les ${ws.length} mots</h2><button class="btn ghost" id="playAll">${ic('speaker')} Tout écouter</button></div>
+  <div class="sec"><h2>${t('wordsH', ws.length)}</h2><button class="btn ghost" id="playAll">${ic('speaker')} ${t('playAll')}</button></div>
   <div class="wordlist">${ws.map(wordRow).join('')}</div>
-  ${c < NCH - 1 && unlocked(c + 1) ? `<div class="row" style="justify-content:flex-end"><button class="btn ghost" id="nextCh">Chapitre ${c + 2} ${ic('ba')}</button></div>` : ''}`;
+  ${c < NCH - 1 && unlocked(c + 1) ? `<div class="row" style="justify-content:flex-end"><button class="btn ghost" id="nextCh">${t('chapter')} ${c + 2} ${ic('ba')}</button></div>` : ''}`;
   document.getElementById('bk').onclick = () => go('home');
   $app.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => startMode(b.dataset.mode, c));
   bindSay();
@@ -528,7 +650,7 @@ function renderChapter() {
 }
 function bindSay() { $app.querySelectorAll('[data-say]').forEach(b => b.onclick = e => { e.stopPropagation(); say(+b.dataset.say); }); }
 function playSeq(ids) {
-  if (!('speechSynthesis' in window)) return toast("Ce navigateur ne lit pas l'audio arabe");
+  if (!('speechSynthesis' in window)) return toast(t('noTTS'));
   speechSynthesis.cancel();
   ids.forEach(id => { const u = new SpeechSynthesisUtterance(W[id].ar); u.lang = arVoice ? arVoice.lang : 'ar-SA'; if (arVoice) u.voice = arVoice; u.rate = S.rate; speechSynthesis.speak(u); });
 }
@@ -543,17 +665,17 @@ function distractors(w, field, pool, n = 3) {
   return out;
 }
 function makeQ(w, type, pool) {
-  const field = type === 'ar2fr' ? 'fr' : 'ar';
+  const field = type === 'ar2fr' ? MK() : 'ar';
   return { w, type, opts: shuffle([w].concat(distractors(w, field, pool))) };
 }
 function startMode(mode, c) {
   const ws = chWords(c);
   if (mode === 'cards') { G = { kind: 'cards', c, list: shuffle(ws), i: 0, flipped: false, knew: 0, xp: 0, missed: [] }; return go('game'); }
   if (mode === 'pairs') { const s = shuffle(ws); G = { kind: 'pairs', c, rounds: [s.slice(0, 7), s.slice(7, 14), s.slice(14)], r: 0, xp: 0, errors: 0, matched: 0, sel: null, missed: [] }; setupPairsRound(); return go('game'); }
-  if (mode === 'listen' && !('speechSynthesis' in window)) return toast("L'écoute nécessite la synthèse vocale du navigateur");
+  if (mode === 'listen' && !('speechSynthesis' in window)) return toast(t('noListen'));
   let qs;
   if (mode === 'exam') {
-    const types = ['ar2fr', 'fr2ar', 'ar2fr', 'listen'].filter(t => t !== 'listen' || ('speechSynthesis' in window));
+    const types = ['ar2fr', 'fr2ar', 'ar2fr', 'listen'].filter(x => x !== 'listen' || ('speechSynthesis' in window));
     qs = shuffle(ws).slice(0, 15).map((w, i) => makeQ(w, types[i % types.length], ws));
   } else qs = shuffle(ws).map(w => makeQ(w, mode, ws));
   G = { kind: mode === 'exam' ? 'exam' : 'quiz', mode, c, qs, i: 0, ok: 0, combo: 0, best: 0, xp: 0, lives: mode === 'exam' ? 3 : null, answered: null, missed: [] };
@@ -578,8 +700,8 @@ function startBlitz() {
 }
 function nextBlitzQ() {
   const w = G.pool[Math.floor(Math.random() * G.pool.length)];
-  const t = Math.random() < .5 ? 'ar2fr' : 'fr2ar';
-  G.q = makeQ(w, t, W.slice(Math.max(0, w.id - 30), w.id + 30)); G.answered = null;
+  const ty = Math.random() < .5 ? 'ar2fr' : 'fr2ar';
+  G.q = makeQ(w, ty, W.slice(Math.max(0, w.id - 30), w.id + 30)); G.answered = null;
 }
 
 function renderGame() {
@@ -590,15 +712,16 @@ function renderGame() {
   const prog = G.kind === 'blitz' ? G.t / 60 : (G.i + (G.answered ? 1 : 0)) / total;
   const w = q.w, a = G.answered;
   let prompt;
-  if (q.type === 'ar2fr') prompt = `<div class="qlabel">Que signifie ce mot ?</div><div class="prompt-ar ar" lang="ar">${w.ar}</div><button class="play" data-say="${w.id}" aria-label="Écouter">${ic('speaker')}</button>`;
-  else if (q.type === 'fr2ar') prompt = `<div class="qlabel">Quel mot arabe signifie…</div><div class="prompt-fr">${esc(w.fr)}</div>`;
-  else prompt = `<div class="qlabel">Écoutez, puis choisissez le mot entendu</div><button class="bigplay" data-say="${w.id}" aria-label="Écouter le mot">${ic('speaker')}</button><button class="btn ghost" id="slow" style="padding:6px 12px;font-size:14px">Plus lentement</button>`;
+  if (q.type === 'ar2fr') prompt = `<div class="qlabel">${t('qAr')}</div><div class="prompt-ar ar" lang="ar">${w.ar}</div><button class="play" data-say="${w.id}" aria-label="${t('listen')}">${ic('speaker')}</button>`;
+  else if (q.type === 'fr2ar') prompt = `<div class="qlabel">${t('qFr')}</div><div class="prompt-fr">${esc(M(w))}</div>`;
+  else prompt = `<div class="qlabel">${t('qListen')}</div><button class="bigplay" data-say="${w.id}" aria-label="${t('listenWord')}">${ic('speaker')}</button><button class="btn ghost" id="slow" style="padding:6px 12px;font-size:14px">${t('slower')}</button>`;
   const isAr = q.type !== 'ar2fr';
+  const pr = t('praise');
   $app.innerHTML = `<div class="game">
     <div class="ghead">
-      <button class="iconbtn" id="quit" aria-label="Quitter">${ic('x')}</button>
+      <button class="iconbtn" id="quit" aria-label="${t('quit')}">${ic('x')}</button>
       <div class="bar"><i style="width:${prog * 100}%;${G.kind === 'blitz' ? 'background:var(--gold-bright)' : ''}"></i></div>
-      ${G.lives !== null ? `<span class="lives" aria-label="${G.lives} vies">${[0, 1, 2].map(i => `<span class="${i < G.lives ? '' : 'off'}">${ic('heart')}</span>`).join('')}</span>` : ''}
+      ${G.lives !== null ? `<span class="lives" aria-label="${t('lives', G.lives)}">${[0, 1, 2].map(i => `<span class="${i < G.lives ? '' : 'off'}">${ic('heart')}</span>`).join('')}</span>` : ''}
       ${G.kind === 'blitz' ? `<span class="timer tnum ${G.t <= 10 ? 'low' : ''}" id="tm">${G.t}</span>` : ''}
       <span class="combo">${G.combo >= 2 ? '×' + G.combo : ''}</span>
     </div>
@@ -606,13 +729,13 @@ function renderGame() {
     <div class="opts">${q.opts.map((o, i) => {
       let cls = '';
       if (a) { if (o.id === w.id) cls = 'right'; else if (o.id === a.pick) cls = 'wrong'; }
-      return `<button class="opt ${isAr ? 'ar-opt' : ''} ${cls}" data-pick="${o.id}" ${a ? 'disabled' : ''}><span class="k">${i + 1}</span>${isAr ? `<span lang="ar" dir="rtl">${o.ar}</span>` : esc(o.fr)}</button>`;
+      return `<button class="opt ${isAr ? 'ar-opt' : ''} ${cls}" data-pick="${o.id}" ${a ? 'disabled' : ''}><span class="k">${i + 1}</span>${isAr ? `<span lang="ar" dir="rtl">${o.ar}</span>` : esc(M(o))}</button>`;
     }).join('')}</div>
     ${a && G.kind !== 'blitz' ? `<div class="feedback ${a.ok ? 'ok' : 'ko'}">
-        <div><b>${a.ok ? ['Bravo !', 'Excellent !', 'Parfait !', 'Bien vu !'][Math.floor(Math.random() * 4)] : 'Réponse :'}</b>
-        <span class="sol"> <span class="ar" lang="ar" style="font-size:22px">${w.ar}</span> · <b>${esc(w.ph)}</b> · ${esc(w.fr)}</span></div>
-        <button class="btn ${a.ok ? 'okb' : 'kob'}" id="nextQ">Continuer</button></div>` : ''}
-    <p class="muted" style="text-align:center;font-size:13px;margin-top:14px">Raccourcis : touches 1 à 4, puis Entrée</p>
+        <div><b>${a.ok ? pr[Math.floor(Math.random() * pr.length)] : t('answer')}</b>
+        <span class="sol"> <span class="ar" lang="ar" style="font-size:22px">${w.ar}</span> · <b>${esc(w.ph)}</b> · ${esc(M(w))}</span></div>
+        <button class="btn ${a.ok ? 'okb' : 'kob'}" id="nextQ">${t('cont')}</button></div>` : ''}
+    <p class="muted" style="text-align:center;font-size:13px;margin-top:14px">${t('keysQ')}</p>
   </div>`;
   bindSay();
   document.getElementById('quit').onclick = () => { clearInterval(blitzTimer); G.kind === 'blitz' || G.c === null ? go('home') : go('chapter', { c: G.c }); };
@@ -649,18 +772,18 @@ function nextQ() {
 function renderCards() {
   const w = G.list[G.i];
   $app.innerHTML = `<div class="game">
-    <div class="ghead"><button class="iconbtn" id="quit" aria-label="Quitter">${ic('x')}</button><div class="bar"><i style="width:${G.i / G.list.length * 100}%"></i></div><span class="muted tnum">${G.i + 1}/${G.list.length}</span></div>
-    <button class="flip ${G.flipped ? 'on' : ''}" id="flip" aria-label="Retourner la carte">
+    <div class="ghead"><button class="iconbtn" id="quit" aria-label="${t('quit')}">${ic('x')}</button><div class="bar"><i style="width:${G.i / G.list.length * 100}%"></i></div><span class="muted tnum">${G.i + 1}/${G.list.length}</span></div>
+    <button class="flip ${G.flipped ? 'on' : ''}" id="flip" aria-label="${t('flipCard')}">
       <div class="flip-in">
-        <div class="face"><div class="eyebrow">Mot n° ${w.n} · ${w.occ.toLocaleString('fr-FR')} occurrences</div><div class="prompt-ar ar" lang="ar">${w.ar}</div><div class="muted">Touchez pour retourner</div></div>
-        <div class="face back"><div class="ar" lang="ar" style="font-size:40px">${w.ar}</div><div class="ph">${esc(w.ph)}</div><div class="fr">${esc(w.fr)}</div></div>
+        <div class="face"><div class="eyebrow">${t('wordNo', w.n, nf(w.occ))}</div><div class="prompt-ar ar" lang="ar">${w.ar}</div><div class="muted">${t('tapFlip')}</div></div>
+        <div class="face back"><div class="ar" lang="ar" style="font-size:40px">${w.ar}</div><div class="ph">${esc(w.ph)}</div><div class="fr">${esc(M(w))}</div></div>
       </div>
     </button>
     <div class="row">
-      <button class="btn ghost" id="sayBtn">${ic('speaker')} Écouter</button>
-      ${G.flipped ? `<button class="btn kob" id="no">${ic('repeat')} À revoir</button><button class="btn okb" id="yes">${ic('check')} Je le savais</button>` : `<button class="btn" id="show">Voir la réponse</button>`}
+      <button class="btn ghost" id="sayBtn">${ic('speaker')} ${t('listen')}</button>
+      ${G.flipped ? `<button class="btn kob" id="no">${ic('repeat')} ${t('again2')}</button><button class="btn okb" id="yes">${ic('check')} ${t('knew')}</button>` : `<button class="btn" id="show">${t('show')}</button>`}
     </div>
-    <p class="muted" style="text-align:center;font-size:13px;margin-top:14px">Raccourcis : Espace pour retourner, ← à revoir, → je le savais</p>
+    <p class="muted" style="text-align:center;font-size:13px;margin-top:14px">${t('keysC')}</p>
   </div>`;
   document.getElementById('quit').onclick = () => go('chapter', { c: G.c });
   const flip = () => { G.flipped = !G.flipped; sfx('tap'); renderCards(); };
@@ -688,13 +811,13 @@ function setupPairsRound() {
 function renderPairs() {
   const totalPairs = G.rounds.reduce((s, r) => s + r.length, 0);
   $app.innerHTML = `<div class="game">
-    <div class="ghead"><button class="iconbtn" id="quit" aria-label="Quitter">${ic('x')}</button><div class="bar"><i style="width:${G.matched / totalPairs * 100}%"></i></div><span class="muted tnum">Manche ${G.r + 1}/${G.rounds.length}</span></div>
-    <p class="qlabel" style="text-align:center;margin:0 0 12px">Touchez un mot arabe, puis son sens</p>
+    <div class="ghead"><button class="iconbtn" id="quit" aria-label="${t('quit')}">${ic('x')}</button><div class="bar"><i style="width:${G.matched / totalPairs * 100}%"></i></div><span class="muted tnum">${t('round', G.r + 1, G.rounds.length)}</span></div>
+    <p class="qlabel" style="text-align:center;margin:0 0 12px">${t('pairsHint')}</p>
     <div class="pairs">
       <div class="col">${G.left.map(w => `<button class="tile ar-t ${G.done.has(w.id) ? 'done' : ''} ${G.sel && G.sel.side === 'L' && G.sel.id === w.id ? 'sel' : ''} ${G.bad && G.bad.L === w.id ? 'bad' : ''}" data-l="${w.id}" lang="ar" dir="rtl">${w.ar}</button>`).join('')}</div>
-      <div class="col">${G.right.map(w => `<button class="tile ${G.done.has(w.id) ? 'done' : ''} ${G.sel && G.sel.side === 'R' && G.sel.id === w.id ? 'sel' : ''} ${G.bad && G.bad.R === w.id ? 'bad' : ''}" data-r="${w.id}">${esc(w.fr)}</button>`).join('')}</div>
+      <div class="col">${G.right.map(w => `<button class="tile ${G.done.has(w.id) ? 'done' : ''} ${G.sel && G.sel.side === 'R' && G.sel.id === w.id ? 'sel' : ''} ${G.bad && G.bad.R === w.id ? 'bad' : ''}" data-r="${w.id}">${esc(M(w))}</button>`).join('')}</div>
     </div>
-    <p class="muted" style="text-align:center;font-size:13px;margin-top:14px">Erreurs : <b class="tnum">${G.errors}</b></p>
+    <p class="muted" style="text-align:center;font-size:13px;margin-top:14px">${t('errors')} <b class="tnum">${G.errors}</b></p>
   </div>`;
   document.getElementById('quit').onclick = () => go('chapter', { c: G.c });
   $app.querySelectorAll('[data-l]').forEach(b => b.onclick = () => pick('L', +b.dataset.l));
@@ -704,9 +827,9 @@ function pick(side, id) {
   G.bad = null;
   if (side === 'L') say(id);
   if (!G.sel || G.sel.side === side) { G.sel = { side, id }; sfx('tap'); return renderPairs(); }
-  const L = side === 'L' ? id : G.sel.id, R = side === 'R' ? id : G.sel.id;
-  if (L === R) { G.done.add(L); G.matched++; G.xp += 5; addXp(5); mark(L, true); sfx('ok'); }
-  else { G.errors++; G.bad = { L, R }; sfx('ko'); mark(L, false); if (!G.missed.includes(L)) G.missed.push(L); }
+  const Lw = side === 'L' ? id : G.sel.id, Rw = side === 'R' ? id : G.sel.id;
+  if (Lw === Rw) { G.done.add(Lw); G.matched++; G.xp += 5; addXp(5); mark(Lw, true); sfx('ok'); }
+  else { G.errors++; G.bad = { L: Lw, R: Rw }; sfx('ko'); mark(Lw, false); if (!G.missed.includes(Lw)) G.missed.push(Lw); }
   G.sel = null;
   if (G.done.size === G.rounds[G.r].length) {
     G.r++;
@@ -720,11 +843,11 @@ function pick(side, id) {
 function finish(failed) {
   clearInterval(blitzTimer);
   let r = { kind: G.kind, xp: G.xp, missed: [...new Set(G.missed)], c: G.c };
-  if (G.kind === 'cards') { r.title = 'Cartes terminées'; r.stats = [[G.knew + '/' + G.list.length, 'connus'], ['+' + G.xp, 'XP'], [chWords(G.c).filter(w => isKnown(w.id)).length + '/20', 'maîtrisés']]; }
-  else if (G.kind === 'pairs') { r.title = G.errors === 0 ? 'Sans faute !' : 'Toutes les paires trouvées'; r.stats = [[G.matched, 'paires'], [G.errors, 'erreurs'], ['+' + G.xp, 'XP']]; if (G.errors === 0) { G.xp += 20; addXp(20); r.stats[2][0] = '+' + G.xp; } }
+  if (G.kind === 'cards') { r.title = 'cardsDone'; r.stats = [[G.knew + '/' + G.list.length, 'knownL'], ['+' + G.xp, 'XP'], [chWords(G.c).filter(w => isKnown(w.id)).length + '/20', 'masteredL']]; }
+  else if (G.kind === 'pairs') { r.title = G.errors === 0 ? 'flawless' : 'allPairs'; r.stats = [[G.matched, 'pairsL'], [G.errors, 'errorsL'], ['+' + G.xp, 'XP']]; if (G.errors === 0) { G.xp += 20; addXp(20); r.stats[2][0] = '+' + G.xp; } }
   else if (G.kind === 'blitz') {
     const rec = G.ok > S.blitz; if (rec) { S.blitz = G.ok; save(); }
-    r.title = rec ? 'Nouveau record !' : 'Temps écoulé'; r.stats = [[G.ok, 'bonnes réponses'], [S.blitz, 'record'], ['+' + G.xp, 'XP']]; r.win = rec;
+    r.title = rec ? 'newRecord' : 'timeUp'; r.stats = [[G.ok, 'correctL'], [S.blitz, 'recordL'], ['+' + G.xp, 'XP']]; r.win = rec;
   } else {
     const n = failed ? G.i + 1 : G.qs.length, acc = G.ok / G.qs.length;
     if (G.kind === 'exam') {
@@ -733,26 +856,27 @@ function finish(failed) {
       if (stars > prev) { S.stars[G.c] = stars; save(); }
       if (stars >= 1) { G.xp += 50; addXp(50); }
       r.stars = stars; r.win = stars >= 1;
-      r.title = failed ? 'Plus de vies' : stars === 3 ? 'Sans faute !' : stars >= 1 ? 'Épreuve réussie' : 'Presque…';
-      r.sub = failed ? 'Révisez les mots manqués, puis retentez l\'épreuve.' : stars === 0 ? 'Il faut 60 % de bonnes réponses pour gagner une étoile.' : (wasLocked && unlocked(G.c + 1) ? 'Le chapitre ' + (G.c + 2) + ' est maintenant ouvert.' : '');
+      r.title = failed ? 'noLives' : stars === 3 ? 'flawless' : stars >= 1 ? 'passed' : 'almost';
       r.unlockedNext = wasLocked && unlocked(G.c + 1);
-    } else r.title = acc >= .9 ? 'Excellent !' : acc >= .6 ? 'Bien joué' : 'Continuez, ça rentre';
-    r.stats = [[G.ok + '/' + (G.kind === 'exam' && failed ? n : G.qs.length), 'bonnes réponses'], ['×' + G.best, 'meilleur combo'], ['+' + G.xp, 'XP']];
+      r.sub = failed ? ['subFail'] : stars === 0 ? ['subZero'] : (r.unlockedNext ? ['subUnlocked', G.c + 2] : null);
+    } else r.title = acc >= .9 ? 'excellent' : acc >= .6 ? 'wellDone' : 'keepGoing';
+    r.stats = [[G.ok + '/' + (G.kind === 'exam' && failed ? n : G.qs.length), 'correctL'], ['×' + G.best, 'bestCombo'], ['+' + G.xp, 'XP']];
   }
   if (r.win || (G.kind === 'cards') || (G.kind === 'pairs') || (G.kind === 'quiz' && G.ok / G.qs.length >= .8)) { sfx('win'); confetti(); }
   view = { name: 'result', r }; render(); window.scrollTo(0, 0);
 }
 function renderResult() {
   const r = view.r;
+  const lbl = k => k === 'XP' ? 'XP' : t(k);
   $app.innerHTML = `<div class="game"><div class="card result">
     ${r.stars !== undefined ? `<div class="bigstars">${[0, 1, 2].map(i => `<span class="${i < r.stars ? 'on' : ''}">${ic('star', '')}</span>`).join('')}</div>` : `<div style="color:var(--gold-bright)">${ic(r.kind === 'blitz' ? 'clock' : 'trophy', '').replace('<svg', '<svg style="width:64px;height:64px"')}</div>`}
-    <h2>${r.title}</h2>
-    ${r.sub ? `<p class="muted" style="margin:0">${r.sub}</p>` : ''}
-    <div class="rstats">${r.stats.map(([v, l]) => `<div class="stat"><b class="tnum">${v}</b><span>${l}</span></div>`).join('')}</div>
-    ${r.missed.length ? `<div class="missed"><div class="eyebrow">À revoir</div>${r.missed.slice(0, 10).map(id => `<div class="m"><button class="play" data-say="${id}" aria-label="Écouter">${ic('speaker')}</button><span class="ar" lang="ar">${W[id].ar}</span><span><b>${esc(W[id].ph)}</b> · ${esc(W[id].fr)}</span></div>`).join('')}</div>` : ''}
+    <h2>${t(r.title)}</h2>
+    ${r.sub ? `<p class="muted" style="margin:0">${t(...r.sub)}</p>` : ''}
+    <div class="rstats">${r.stats.map(([v, l]) => `<div class="stat"><b class="tnum">${v}</b><span>${lbl(l)}</span></div>`).join('')}</div>
+    ${r.missed.length ? `<div class="missed"><div class="eyebrow">${t('toReview')}</div>${r.missed.slice(0, 10).map(id => `<div class="m"><button class="play" data-say="${id}" aria-label="${t('listen')}">${ic('speaker')}</button><span class="ar" lang="ar">${W[id].ar}</span><span><b>${esc(W[id].ph)}</b> · ${esc(M(W[id]))}</span></div>`).join('')}</div>` : ''}
     <div class="row">
-      ${r.c !== null && r.c !== undefined ? `<button class="btn ghost" id="toCh">Retour au chapitre</button>` : `<button class="btn ghost" id="toHome">Accueil</button>`}
-      ${r.unlockedNext ? `<button class="btn goldb" id="toNext">Chapitre ${r.c + 2} ${ic('ba')}</button>` : `<button class="btn" id="again">${ic('repeat')} Rejouer</button>`}
+      ${r.c !== null && r.c !== undefined ? `<button class="btn ghost" id="toCh">${t('backCh')}</button>` : `<button class="btn ghost" id="toHome">${t('home')}</button>`}
+      ${r.unlockedNext ? `<button class="btn goldb" id="toNext">${t('chapter')} ${r.c + 2} ${ic('ba')}</button>` : `<button class="btn" id="again">${ic('repeat')} ${t('again')}</button>`}
     </div>
   </div></div>`;
   bindSay();
@@ -771,19 +895,20 @@ function renderResult() {
 const strip = s => s.normalize('NFD').replace(/[ً-ٰٟ̀-ͯ]/g, '').replace(/[أإآٱ]/g, 'ا').toLowerCase();
 function renderLexique() {
   const f = view.f || 'all';
+  const fl = t('filters');
   $app.innerHTML = `
-  <button class="back" id="bk">${ic('back')} Accueil</button>
-  <div class="sec" style="margin-top:8px"><h2>Lexique des 300 mots</h2><span class="muted" style="font-size:14px">Classés par fréquence</span></div>
-  <div class="search">${ic('search')}<input id="q" type="search" placeholder="Chercher en français, en phonétique ou en arabe" value="${esc(view.q || '')}" autocomplete="off"></div>
-  <div class="filters">${[['all', 'Tous'], ['known', 'Maîtrisés'], ['learn', 'À apprendre'], ['wrong', 'Erreurs']].map(([k, l]) => `<button data-f="${k}" class="${f === k ? 'on' : ''}">${l}</button>`).join('')}</div>
+  <button class="back" id="bk">${ic('back')} ${t('home')}</button>
+  <div class="sec" style="margin-top:8px"><h2>${t('lexH')}</h2><span class="muted" style="font-size:14px">${t('byFreq')}</span></div>
+  <div class="search">${ic('search')}<input id="q" type="search" placeholder="${t('searchPh')}" value="${esc(view.q || '')}" autocomplete="off"></div>
+  <div class="filters">${['all', 'known', 'learn', 'wrong'].map((k, i) => `<button data-f="${k}" class="${f === k ? 'on' : ''}">${fl[i]}</button>`).join('')}</div>
   <div class="wordlist" id="lx"></div>`;
   document.getElementById('bk').onclick = () => go('home');
   const q = document.getElementById('q');
   const draw = () => {
-    const t = strip(q.value.trim()); view.q = q.value;
+    const s = strip(q.value.trim()); view.q = q.value;
     const list = W.filter(w => (f === 'all' || (f === 'known' && isKnown(w.id)) || (f === 'learn' && !isKnown(w.id)) || (f === 'wrong' && S.wrong.includes(w.id)))
-      && (!t || strip(w.fr).includes(t) || strip(w.ph).includes(t) || strip(w.ar).includes(t) || String(w.n) === t));
-    document.getElementById('lx').innerHTML = list.length ? list.map(wordRow).join('') : `<div style="padding:20px" class="muted">Aucun mot ne correspond.</div>`;
+      && (!s || strip(M(w)).includes(s) || strip(w.ph).includes(s) || strip(w.ar).includes(s) || String(w.n) === s));
+    document.getElementById('lx').innerHTML = list.length ? list.map(wordRow).join('') : `<div style="padding:20px" class="muted">${t('noMatch')}</div>`;
     bindSay();
   };
   q.oninput = draw; draw();
@@ -795,31 +920,33 @@ function openSettings() {
   const host = document.getElementById('sheetHost');
   const hasTTS = 'speechSynthesis' in window;
   host.innerHTML = `<div class="sheet-bg" id="sbg"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="stt">
-    <div style="display:flex;justify-content:space-between;align-items:center"><h2 id="stt" style="font-size:22px">Réglages</h2><button class="iconbtn" id="sx" aria-label="Fermer">${ic('x')}</button></div>
-    <div class="field"><label for="voiceSel">Voix arabe</label>
+    <div style="display:flex;justify-content:space-between;align-items:center"><h2 id="stt" style="font-size:22px">${t('settings')}</h2><button class="iconbtn" id="sx" aria-label="${t('close')}">${ic('x')}</button></div>
+    <div class="field"><label for="langSel">${t('language')}</label><select id="langSel"><option value="fr" ${L === 'fr' ? 'selected' : ''}>Français</option><option value="en" ${L === 'en' ? 'selected' : ''}>English</option></select></div>
+    <div class="field"><label for="voiceSel">${t('voice')}</label>
       ${voices.length ? `<select id="voiceSel">${voices.map(v => `<option value="${esc(v.name)}" ${arVoice && v.name === arVoice.name ? 'selected' : ''}>${esc(v.name)} (${esc(v.lang)})</option>`).join('')}</select>`
-        : `<div class="note warn">${hasTTS ? "Aucune voix arabe trouvée sur cet appareil. Sur Mac : Réglages Système › Accessibilité › Contenu énoncé › Voix du système › ajouter une voix arabe. Sur iPhone : Réglages › Accessibilité › Contenu énoncé › Voix › Arabe. Sur Android : installez la voix arabe de Google dans les paramètres de synthèse vocale. Chrome sur ordinateur propose aussi une voix Google arabe." : "Ce navigateur ne propose pas de synthèse vocale."}</div>`}
+        : `<div class="note warn">${hasTTS ? t('noVoice') : t('noSynth')}</div>`}
     </div>
-    <div class="field"><label for="rate">Vitesse de lecture : <span id="rv">${S.rate.toFixed(2).replace('.', ',')}</span></label><input id="rate" type="range" min="0.4" max="1.2" step="0.05" value="${S.rate}"><button class="btn ghost" id="test" style="align-self:flex-start">${ic('speaker')} Tester : <span class="ar" lang="ar">بِسْمِ ٱللَّهِ</span></button></div>
-    <div class="field"><label for="goal">Objectif quotidien</label><select id="goal">${[30, 50, 100, 200].map(g => `<option value="${g}" ${S.goal === g ? 'selected' : ''}>${g} XP par jour</option>`).join('')}</select></div>
-    <label class="switch" for="sfxT"><span><b>Effets sonores</b><br><small class="muted">Sons de bonne et mauvaise réponse</small></span><input type="checkbox" id="sfxT" ${S.sfx ? 'checked' : ''}></label>
-    <label class="switch" for="unl"><span><b>Ouvrir tous les chapitres</b><br><small class="muted">Pour réviser librement sans passer les épreuves</small></span><input type="checkbox" id="unl" ${S.unlockAll ? 'checked' : ''}></label>
-    <div class="note">La progression est enregistrée dans ce navigateur, sur cet appareil.</div>
-    <div id="rz"><button class="btn ghost" id="reset">Effacer ma progression</button></div>
+    <div class="field"><label for="rate">${t('rate')} <span id="rv">${t('num', S.rate)}</span></label><input id="rate" type="range" min="0.4" max="1.2" step="0.05" value="${S.rate}"><button class="btn ghost" id="test" style="align-self:flex-start">${ic('speaker')} ${t('test')} <span class="ar" lang="ar">بِسْمِ ٱللَّهِ</span></button></div>
+    <div class="field"><label for="goal">${t('goal')}</label><select id="goal">${[30, 50, 100, 200].map(g => `<option value="${g}" ${S.goal === g ? 'selected' : ''}>${t('perDay', g)}</option>`).join('')}</select></div>
+    <label class="switch" for="sfxT"><span><b>${t('sfx')}</b><br><small class="muted">${t('sfxD')}</small></span><input type="checkbox" id="sfxT" ${S.sfx ? 'checked' : ''}></label>
+    <label class="switch" for="unl"><span><b>${t('unlock')}</b><br><small class="muted">${t('unlockD')}</small></span><input type="checkbox" id="unl" ${S.unlockAll ? 'checked' : ''}></label>
+    <div class="note">${t('storage')}</div>
+    <div id="rz"><button class="btn ghost" id="reset">${t('reset')}</button></div>
   </div></div>`;
   const close = () => { host.innerHTML = ''; render(); };
   document.getElementById('sx').onclick = close;
   document.getElementById('sbg').onclick = e => { if (e.target.id === 'sbg') close(); };
+  document.getElementById('langSel').onchange = e => { setLang(e.target.value); openSettings(); };
   const vs = document.getElementById('voiceSel'); if (vs) vs.onchange = () => { S.voice = vs.value; save(); loadVoices(); speak('بِسْمِ ٱللَّهِ'); };
-  const rate = document.getElementById('rate'); rate.oninput = () => { S.rate = +rate.value; document.getElementById('rv').textContent = S.rate.toFixed(2).replace('.', ','); save(); };
+  const rate = document.getElementById('rate'); rate.oninput = () => { S.rate = +rate.value; document.getElementById('rv').textContent = t('num', S.rate); save(); };
   document.getElementById('test').onclick = () => speak('بِسْمِ ٱللَّهِ');
   document.getElementById('goal').onchange = e => { S.goal = +e.target.value; save(); };
   document.getElementById('sfxT').onchange = e => { S.sfx = e.target.checked; save(); };
   document.getElementById('unl').onchange = e => { S.unlockAll = e.target.checked; save(); };
   document.getElementById('reset').onclick = () => {
-    document.getElementById('rz').innerHTML = `<div class="note warn" style="display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap"><span>Effacer XP, étoiles et maîtrise ?</span><span class="row" style="margin:0"><button class="btn ghost" id="rn">Annuler</button><button class="btn kob" id="ry">Effacer</button></span></div>`;
+    document.getElementById('rz').innerHTML = `<div class="note warn" style="display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap"><span>${t('resetQ')}</span><span class="row" style="margin:0"><button class="btn ghost" id="rn">${t('cancel')}</button><button class="btn kob" id="ry">${t('erase')}</button></span></div>`;
     document.getElementById('rn').onclick = openSettings;
-    document.getElementById('ry').onclick = () => { const keep = { rate: S.rate, voice: S.voice, sfx: S.sfx }; S = Object.assign({}, DEF, keep); save(); host.innerHTML = ''; go('home'); toast('Progression effacée'); };
+    document.getElementById('ry').onclick = () => { const keep = { rate: S.rate, voice: S.voice, sfx: S.sfx, lang: S.lang }; S = Object.assign({}, DEF, keep); save(); host.innerHTML = ''; go('home'); toast(t('erased')); };
   };
 }
 
@@ -856,6 +983,7 @@ document.addEventListener('keydown', e => {
   else if (e.key === 'Enter' && G.answered && G.kind !== 'blitz') { e.preventDefault(); nextQ(); }
 });
 
+applyLang();
 fromHash();
 </script>
 </body>
