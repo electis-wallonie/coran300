@@ -318,7 +318,7 @@ const STR = {
     filters: ['Tous', 'Maîtrisés', 'À apprendre', 'Erreurs'], noMatch: 'Aucun mot ne correspond.',
     close: 'Fermer', language: 'Langue', voice: 'Voix arabe',
     noVoice: "Aucune voix arabe trouvée sur cet appareil. Sur Mac : Réglages Système › Accessibilité › Contenu énoncé › Voix du système › ajouter une voix arabe. Sur iPhone : Réglages › Accessibilité › Contenu énoncé › Voix › Arabe. Sur Android : installez la voix arabe de Google dans les paramètres de synthèse vocale. Chrome sur ordinateur propose aussi une voix Google arabe.",
-    noSynth: 'Ce navigateur ne propose pas de synthèse vocale.', rate: 'Vitesse de lecture :', test: 'Tester :', num: v => v.toFixed(2).replace('.', ','),
+    noSynth: 'Ce navigateur ne propose pas de synthèse vocale.', noArVoice: "Aucune voix arabe sur cet appareil. Ouvrez les Réglages (roue dentée) pour savoir comment en ajouter une.", silentTip: 'Pas de son ? Sur iPhone, désactivez le mode silencieux (bouton sur le côté) et montez le volume.', rate: 'Vitesse de lecture :', test: 'Tester :', num: v => v.toFixed(2).replace('.', ','),
     goal: 'Objectif quotidien', perDay: g => g + ' XP par jour', sfx: 'Effets sonores', sfxD: 'Sons de bonne et mauvaise réponse',
     unlock: 'Ouvrir tous les chapitres', unlockD: 'Pour réviser librement sans passer les épreuves',
     storage: 'La progression est enregistrée dans ce navigateur, sur cet appareil.', reset: 'Effacer ma progression',
@@ -370,7 +370,7 @@ const STR = {
     filters: ['All', 'Mastered', 'To learn', 'Mistakes'], noMatch: 'No word matches.',
     close: 'Close', language: 'Language', voice: 'Arabic voice',
     noVoice: 'No Arabic voice found on this device. On Mac: System Settings › Accessibility › Spoken Content › System Voice › add an Arabic voice. On iPhone: Settings › Accessibility › Spoken Content › Voices › Arabic. On Android: install Google’s Arabic voice in the text-to-speech settings. Chrome on desktop also offers a Google Arabic voice.',
-    noSynth: 'This browser does not support speech synthesis.', rate: 'Speech rate:', test: 'Test:', num: v => v.toFixed(2),
+    noSynth: 'This browser does not support speech synthesis.', noArVoice: 'No Arabic voice on this device. Open Settings (gear icon) to see how to add one.', silentTip: 'No sound? On iPhone, turn off silent mode (switch on the side) and turn the volume up.', rate: 'Speech rate:', test: 'Test:', num: v => v.toFixed(2),
     goal: 'Daily goal', perDay: g => g + ' XP per day', sfx: 'Sound effects', sfxD: 'Sounds for right and wrong answers',
     unlock: 'Unlock all chapters', unlockD: 'To review freely without passing the tests',
     storage: 'Your progress is saved in this browser, on this device.', reset: 'Reset my progress',
@@ -459,17 +459,35 @@ function loadVoices() {
   arVoice = voices.slice().sort((a, b) => pref(b) - pref(a))[0] || null;
 }
 if ('speechSynthesis' in window) { loadVoices(); speechSynthesis.onvoiceschanged = () => { loadVoices(); if (document.getElementById('voiceSel')) openSettings(); }; }
-function speak(text, rate) {
-  if (!('speechSynthesis' in window)) { toast(t('noTTS')); return; }
-  try {
-    speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = arVoice ? arVoice.lang : 'ar-SA';
-    if (arVoice) u.voice = arVoice;
-    u.rate = rate || S.rate;
-    speechSynthesis.speak(u);
-  } catch (e) {}
+const TTS = 'speechSynthesis' in window;
+let ttsReady = false, curUtts = [], warned = false;
+function unlockTTS() {
+  if (ttsReady || !TTS) return;
+  ttsReady = true;
+  try { if (!voices.length) loadVoices(); const u = new SpeechSynthesisUtterance(' '); u.volume = 0; curUtts = [u]; speechSynthesis.speak(u); } catch (e) {}
 }
+['pointerdown', 'touchend', 'click', 'keydown'].forEach(ev => document.addEventListener(ev, unlockTTS, true));
+function audioHelp() { if (warned) return; warned = true; toast(arVoice ? t('silentTip') : t('noArVoice')); }
+function makeUtt(text, rate) {
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = arVoice ? arVoice.lang : 'ar-SA';
+  if (arVoice) u.voice = arVoice;
+  u.rate = rate || S.rate;
+  u.onerror = e => { if (e.error !== 'interrupted' && e.error !== 'canceled') audioHelp(); };
+  return u;
+}
+function speakList(texts, rate) {
+  if (!TTS) { toast(t('noTTS')); return; }
+  try {
+    if (!voices.length) loadVoices();
+    const ss = speechSynthesis;
+    const run = () => { curUtts = texts.map(x => makeUtt(x, rate)); ss.resume(); curUtts.forEach(u => ss.speak(u)); };
+    const onlyUnlock = curUtts.length === 1 && curUtts[0].text === ' ';
+    if ((ss.speaking || ss.pending) && !onlyUnlock) { ss.cancel(); setTimeout(run, 80); } else run();
+    if (!arVoice) setTimeout(() => { if (!arVoice) audioHelp(); }, 1500);
+  } catch (e) { audioHelp(); }
+}
+function speak(text, rate) { speakList([text], rate); }
 const say = id => speak(W[id].ar);
 
 let actx = null;
@@ -649,11 +667,7 @@ function renderChapter() {
   document.getElementById('playAll').onclick = () => playSeq(ws.map(w => w.id));
 }
 function bindSay() { $app.querySelectorAll('[data-say]').forEach(b => b.onclick = e => { e.stopPropagation(); say(+b.dataset.say); }); }
-function playSeq(ids) {
-  if (!('speechSynthesis' in window)) return toast(t('noTTS'));
-  speechSynthesis.cancel();
-  ids.forEach(id => { const u = new SpeechSynthesisUtterance(W[id].ar); u.lang = arVoice ? arVoice.lang : 'ar-SA'; if (arVoice) u.voice = arVoice; u.rate = S.rate; speechSynthesis.speak(u); });
-}
+function playSeq(ids) { speakList(ids.map(id => W[id].ar)); }
 
 /* ---------- game engine ---------- */
 function distractors(w, field, pool, n = 3) {
@@ -930,6 +944,7 @@ function openSettings() {
     <div class="field"><label for="goal">${t('goal')}</label><select id="goal">${[30, 50, 100, 200].map(g => `<option value="${g}" ${S.goal === g ? 'selected' : ''}>${t('perDay', g)}</option>`).join('')}</select></div>
     <label class="switch" for="sfxT"><span><b>${t('sfx')}</b><br><small class="muted">${t('sfxD')}</small></span><input type="checkbox" id="sfxT" ${S.sfx ? 'checked' : ''}></label>
     <label class="switch" for="unl"><span><b>${t('unlock')}</b><br><small class="muted">${t('unlockD')}</small></span><input type="checkbox" id="unl" ${S.unlockAll ? 'checked' : ''}></label>
+    <div class="note">${t('silentTip')}</div>
     <div class="note">${t('storage')}</div>
     <div id="rz"><button class="btn ghost" id="reset">${t('reset')}</button></div>
   </div></div>`;
