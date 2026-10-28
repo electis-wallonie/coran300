@@ -1,0 +1,862 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Les 300 mots du Coran</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Figtree:wght@400;500;600;700;800&family=Young+Serif&display=swap">
+<style>
+/* Layout: one centred column (max 960px); home = hero + chapter grid of 8-point star badges; games are full-width cards. Lapis & gold, like illuminated manuscripts. */
+:root{
+  --bg:#F1F3F8; --surface:#FFFFFF; --surface-2:#E7EBF4; --ink:#121A33; --muted:#59637F; --line:#D3D9E6;
+  --lapis:#2445B5; --lapis-soft:#DDE4F9; --on-lapis:#FFFFFF;
+  --gold:#A8741A; --gold-bright:#D89F35; --gold-soft:#F5EAD2;
+  --good:#1B8456; --good-soft:#DCF2E6; --bad:#BE3434; --bad-soft:#F8E1E1;
+  --shadow:0 1px 2px rgba(18,26,51,.06),0 6px 20px rgba(18,26,51,.06);
+  --f-ar:"Amiri","Scheherazade New","Geeza Pro","Noto Naskh Arabic","Times New Roman",serif;
+  --f-display:"Young Serif",Georgia,"Times New Roman",serif;
+  --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0B1121; --surface:#131B30; --surface-2:#1B2540; --ink:#E7EBF6; --muted:#9AA4C2; --line:#29355A;
+  --lapis:#86A2FF; --lapis-soft:#1D2A57; --on-lapis:#0B1121;
+  --gold:#E3B458; --gold-bright:#F0C46C; --gold-soft:#372C15;
+  --good:#4CC68B; --good-soft:#103326; --bad:#FF7B7B; --bad-soft:#3B181D;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0B1121; --surface:#131B30; --surface-2:#1B2540; --ink:#E7EBF6; --muted:#9AA4C2; --line:#29355A;
+  --lapis:#86A2FF; --lapis-soft:#1D2A57; --on-lapis:#0B1121;
+  --gold:#E3B458; --gold-bright:#F0C46C; --gold-soft:#372C15;
+  --good:#4CC68B; --good-soft:#103326; --bad:#FF7B7B; --bad-soft:#3B181D;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 24px rgba(0,0,0,.25); color-scheme:dark}
+
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{color:var(--ink);font-family:var(--f-body);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--surface)}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid var(--lapis);outline-offset:2px}
+.wrap{max-width:960px;margin:0 auto}
+.ar{font-family:var(--f-ar);direction:rtl;unicode-bidi:isolate;line-height:1.6}
+.tnum{font-variant-numeric:tabular-nums}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0;letter-spacing:-.01em}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+svg.i{width:1.15em;height:1.15em;vertical-align:-.2em;flex:none}
+
+/* top bar */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:1px solid var(--line);
+  margin-left:calc(-1 * max(16px,env(safe-area-inset-left,0px)));margin-right:calc(-1 * max(16px,env(safe-area-inset-right,0px)));
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.top .wrap{display:flex;align-items:center;gap:12px;min-height:58px;flex-wrap:wrap;padding-block:6px}
+.brand{display:flex;align-items:center;gap:10px;background:none;border:0;padding:0;margin-right:auto}
+.brand b{font-family:var(--f-display);font-weight:400;font-size:18px}
+.brand .seal{width:30px;height:30px}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:999px;background:var(--surface-2);font-weight:700;font-size:14px;border:0}
+.chip.gold{background:var(--gold-soft);color:var(--gold)}
+.chip.lapis{background:var(--lapis-soft);color:var(--lapis)}
+.iconbtn{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:10px;border:1px solid var(--line);background:var(--surface)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.3fr 1fr;gap:20px;padding-block:28px 8px;align-items:stretch}
+.hero-text{display:flex;flex-direction:column;gap:12px;min-width:0}
+.hero-text .ar.big{text-align:left;font-size:44px;color:var(--lapis);line-height:1.3}
+.hero h1{font-size:clamp(28px,4.4vw,40px);line-height:1.1}
+.hero p{margin:0;max-width:56ch;color:var(--muted)}
+.cover{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow);min-width:0}
+.cover .num{font-family:var(--f-display);font-size:44px;line-height:1;color:var(--ink)}
+.bar{height:10px;border-radius:99px;background:var(--surface-2);overflow:hidden;position:relative}
+.bar>i{position:absolute;inset:0 auto 0 0;background:var(--lapis);border-radius:99px;transition:width .6s ease}
+.bar>i.ceiling{background:var(--lapis-soft)}
+.bar.gold>i{background:var(--gold-bright)}
+.statrow{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--surface-2);border-radius:10px;padding:8px 10px;min-width:0}
+.stat b{display:block;font-size:20px}
+.stat span{font-size:12px;color:var(--muted)}
+
+/* section heads */
+.sec{display:flex;align-items:end;justify-content:space-between;gap:12px;margin:30px 0 14px;flex-wrap:wrap}
+.sec h2{font-size:24px}
+
+/* quick actions */
+.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.qa{display:flex;gap:12px;align-items:center;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;min-width:0}
+.qa:hover{border-color:var(--lapis)}
+.qa .ico{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:var(--lapis-soft);color:var(--lapis);flex:none}
+.qa.gold .ico{background:var(--gold-soft);color:var(--gold)}
+.qa b{display:block}
+.qa small{color:var(--muted);font-size:13px}
+.qa[disabled]{opacity:.55;cursor:not-allowed}
+
+/* chapter grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.ch{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px 12px 14px;transition:transform .15s ease,border-color .15s}
+.ch:hover:not([disabled]){transform:translateY(-2px);border-color:var(--lapis)}
+.ch[disabled]{cursor:not-allowed}
+.ch[disabled] .star-badge{opacity:.35}
+.ch .preview{font-family:var(--f-ar);direction:rtl;font-size:19px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.ch .title{font-weight:700}
+.ch .range{font-size:13px;color:var(--muted)}
+.ch .stars{display:flex;gap:2px;color:var(--line)}
+.ch .stars .on{color:var(--gold-bright)}
+.ch .bar{width:100%;height:6px}
+.ch .lock{position:absolute;top:10px;right:10px;color:var(--muted)}
+.ch.current{border-color:var(--lapis);box-shadow:0 0 0 3px var(--lapis-soft)}
+.star-badge{width:74px;height:74px}
+
+/* chapter view */
+.back{display:inline-flex;align-items:center;gap:6px;background:none;border:0;padding:6px 0;color:var(--muted);font-weight:600;margin-top:18px}
+.chhead{display:flex;gap:18px;align-items:center;margin:8px 0 18px;flex-wrap:wrap}
+.chhead h1{font-size:clamp(26px,4vw,34px)}
+.modes{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.mode{display:flex;flex-direction:column;gap:6px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;min-width:0}
+.mode:hover{border-color:var(--lapis)}
+.mode .ico{display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--lapis-soft);color:var(--lapis)}
+.mode b{font-size:17px}
+.mode small{color:var(--muted)}
+.mode.exam{background:var(--lapis);color:var(--on-lapis);border-color:var(--lapis)}
+.mode.exam small{color:inherit;opacity:.85}
+.mode.exam .ico{background:rgba(255,255,255,.18);color:inherit}
+.xpbadge{font-size:12px;font-weight:700;color:var(--gold)}
+.mode.exam .xpbadge{color:inherit}
+
+.wordlist{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.wrow{display:grid;grid-template-columns:44px 40px minmax(0,1fr) minmax(0,1.4fr) auto;gap:12px;align-items:center;padding:10px 14px;border-top:1px solid var(--line)}
+.wrow:first-child{border-top:0}
+.wrow .n{color:var(--muted);font-size:13px}
+.wrow .w-ar{font-size:26px;text-align:right}
+.wrow .w-ph{font-weight:600;color:var(--lapis);font-size:14px}
+.wrow .w-fr{min-width:0}
+.wrow .w-occ{font-size:12px;color:var(--muted);text-align:right;white-space:nowrap}
+.play{display:inline-grid;place-items:center;width:36px;height:36px;border-radius:50%;border:0;background:var(--lapis-soft);color:var(--lapis);flex:none}
+.play:active{transform:scale(.94)}
+.dots{display:flex;gap:3px;justify-content:flex-end;margin-top:3px}
+.dots i{width:6px;height:6px;border-radius:50%;background:var(--surface-2)}
+.dots i.on{background:var(--good)}
+
+/* game */
+.game{max-width:640px;margin:0 auto;padding-top:18px}
+.ghead{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+.ghead .bar{flex:1}
+.lives{display:flex;gap:2px;color:var(--bad)}
+.lives .off{color:var(--line)}
+.combo{font-weight:800;color:var(--gold);font-size:14px;min-width:46px;text-align:right}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px 20px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;gap:12px;text-align:center}
+.prompt-ar{font-size:clamp(52px,12vw,76px);line-height:1.35;color:var(--ink)}
+.prompt-fr{font-family:var(--f-display);font-size:clamp(24px,5vw,32px);line-height:1.2}
+.qlabel{font-size:14px;color:var(--muted);font-weight:600}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.opt{position:relative;background:var(--surface);border:2px solid var(--line);border-bottom-width:4px;border-radius:14px;padding:14px 12px;font-weight:600;min-height:64px;text-align:center;transition:transform .08s}
+.opt:hover:not([disabled]){border-color:var(--lapis)}
+.opt:active:not([disabled]){transform:translateY(2px)}
+.opt .k{position:absolute;top:6px;left:8px;font-size:11px;color:var(--muted);font-weight:700}
+.opt.ar-opt{font-family:var(--f-ar);font-size:30px;font-weight:400;padding:6px 12px;line-height:1.5}
+.opt.right{border-color:var(--good);background:var(--good-soft);color:var(--good)}
+.opt.wrong{border-color:var(--bad);background:var(--bad-soft);color:var(--bad);animation:shake .35s}
+.opt[disabled]{cursor:default}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.feedback{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding:12px 14px;border-radius:14px;flex-wrap:wrap}
+.feedback.ok{background:var(--good-soft);color:var(--good)}
+.feedback.ko{background:var(--bad-soft);color:var(--bad)}
+.feedback .sol{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:12px 20px;font-weight:700;background:var(--lapis);color:var(--on-lapis);border-bottom:3px solid rgba(0,0,0,.22)}
+.btn.ghost{background:var(--surface-2);color:var(--ink);border-bottom-color:var(--line)}
+.btn.goldb{background:var(--gold-bright);color:#1D1404}
+.btn.okb{background:var(--good);color:var(--on-lapis)}
+.btn.kob{background:var(--bad);color:var(--on-lapis)}
+.bigplay{width:96px;height:96px;border-radius:50%;border:0;background:var(--lapis);color:var(--on-lapis);display:grid;place-items:center;box-shadow:0 0 0 10px var(--lapis-soft)}
+.bigplay svg{width:42px;height:42px}
+
+/* flashcard */
+.flip{perspective:1200px;width:100%;cursor:pointer;background:none;border:0;padding:0}
+.flip-in{position:relative;min-height:300px;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .flip-in{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--surface);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:20px}
+.face.back{transform:rotateY(180deg);background:var(--lapis-soft)}
+.face .ph{font-size:22px;font-weight:700;color:var(--lapis)}
+.face .fr{font-family:var(--f-display);font-size:28px;line-height:1.2}
+.row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+
+/* pairs */
+.pairs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pairs .col{display:flex;flex-direction:column;gap:10px}
+.tile{background:var(--surface);border:2px solid var(--line);border-bottom-width:4px;border-radius:12px;padding:10px;min-height:58px;font-weight:600}
+.tile.ar-t{font-family:var(--f-ar);font-size:28px;font-weight:400;line-height:1.4;padding:4px 10px}
+.tile.sel{border-color:var(--lapis);background:var(--lapis-soft)}
+.tile.done{visibility:hidden}
+.tile.bad{border-color:var(--bad);background:var(--bad-soft);animation:shake .35s}
+.tile.good{border-color:var(--good);background:var(--good-soft)}
+
+/* results */
+.result{text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px;padding:32px 20px}
+.result h2{font-size:32px}
+.bigstars{display:flex;gap:6px;color:var(--line)}
+.bigstars svg{width:56px;height:56px}
+.bigstars .on{color:var(--gold-bright);animation:pop .5s backwards}
+.bigstars .on:nth-child(2){animation-delay:.2s}.bigstars .on:nth-child(3){animation-delay:.4s}
+@keyframes pop{0%{transform:scale(0) rotate(-40deg)}70%{transform:scale(1.25)}100%{transform:scale(1)}}
+.rstats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;width:100%;max-width:440px}
+.missed{width:100%;max-width:480px;text-align:left;display:flex;flex-direction:column;gap:6px}
+.missed .m{display:flex;align-items:center;gap:10px;background:var(--surface-2);border-radius:10px;padding:6px 10px}
+.missed .m .ar{font-size:24px;min-width:70px;text-align:right}
+
+/* lexique */
+.search{display:flex;gap:10px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0 12px;margin-bottom:12px}
+.search input{flex:1;min-width:0;border:0;background:transparent;padding:12px 0;font:inherit;color:var(--ink);outline:none}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.filters button{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:5px 12px;font-size:14px;font-weight:600}
+.filters button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* settings sheet */
+.sheet-bg{position:fixed;inset:0;background:rgba(5,9,20,.45);z-index:20;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--surface);width:100%;max-width:520px;border-radius:18px 18px 0 0;padding:20px max(20px,env(safe-area-inset-right,0px)) calc(24px + env(safe-area-inset-bottom,0px)) max(20px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:16px;max-height:90vh;overflow:auto}
+@media (min-width:640px){.sheet-bg{align-items:center}.sheet{border-radius:18px}}
+.field{display:flex;flex-direction:column;gap:6px}
+.field label{font-weight:700}
+.field select,.field input[type=range]{width:100%}
+.field select{padding:10px;border-radius:10px;border:1px solid var(--line);background:var(--surface-2);color:var(--ink);font:inherit}
+.switch{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.note{font-size:13px;color:var(--muted);background:var(--surface-2);border-radius:10px;padding:10px 12px}
+.note.warn{background:var(--gold-soft);color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:700;z-index:30;box-shadow:var(--shadow);max-width:calc(100% - 32px)}
+canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:25;width:100%;height:100%}
+.timer{font-family:var(--f-display);font-size:22px;min-width:52px;text-align:right}
+.timer.low{color:var(--bad)}
+footer{margin-top:40px;font-size:13px;color:var(--muted);max-width:70ch}
+
+@media (max-width:760px){
+  .hero{grid-template-columns:1fr}
+  .quick,.modes{grid-template-columns:1fr 1fr}
+}
+@media (max-width:520px){
+  .quick,.modes{grid-template-columns:1fr}
+  .wrow{grid-template-columns:36px minmax(0,.9fr) minmax(0,1.3fr);gap:10px;padding:10px 12px}
+  .wrow .n,.wrow .w-meta{display:none}
+  .wrow .w-ar{font-size:24px}
+  .opts{grid-template-columns:1fr}
+  .brand b{font-size:16px}
+  .top .wrap{flex-wrap:nowrap}
+  .chip{padding:5px 8px}
+  .hero-text .ar.big{font-size:36px}
+}
+@media (max-width:430px){.brand b{display:none}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <button class="brand" id="homeBtn" aria-label="Accueil"><svg class="seal" viewBox="0 0 100 100" aria-hidden="true"><g fill="var(--lapis)"><rect x="20" y="20" width="60" height="60" rx="4"/><rect x="20" y="20" width="60" height="60" rx="4" transform="rotate(45 50 50)"/></g><circle cx="50" cy="50" r="17" fill="var(--gold-bright)"/></svg><b>Les 300 mots du Coran</b></button>
+  <div class="chips" id="chips"></div>
+  <button class="iconbtn" id="setBtn" aria-label="Réglages"></button>
+</div></header>
+<main class="wrap" id="app"></main>
+<canvas id="confetti" hidden></canvas>
+<div id="toastHost"></div>
+<div id="sheetHost"></div>
+
+<script>
+const DATA = [["مِنْ","min","de, provenant de",3226],["اللهّٰ","Allah","Allah (Dieu)",2699],["لاَ","laa","non, ne...pas",2323],["فِي","fii","dans, en",1701],["إِنَّ","inna","certes, en vérité",1682],["قَالَ","qaala","il dit",1618],["الَّذِي","alladhii","celui qui, qui",1465],["عَلَى","'alaa","sur",1445],["لِ","li","pour, à",1407],["كَانَ","kaana","il était, il fut",1358],["مَا","maa","ce que, quoi",1174],["رَبّ","rabb","Seigneur",975],["مَنْ","man","qui, quiconque",824],["بِ","bi","avec, par",819],["إِلَى","ilaa","vers, jusqu'à",742],["إِنْ","in","si",694],["إِلاَّ","illaa","sauf, excepté",664],["أَنْ","an","que (subjonctif)",613],["آمَنَ","aamana","il crut, il eut la foi",537],["ذَلِكَ","dhaalika","cela, celui-là",479],["عَنْ","'an","au sujet de, de",465],["هُوَ","huwa","il, lui",464],["أَرْض","ard","terre",461],["إِذَا","idhaa","quand, lorsque",423],["قَدْ","qad","déjà, certes",406],["يَوْم","yawm","jour",405],["قَوْم","qawm","peuple",383],["آيَة","aaya","signe, verset",382],["عَلِمَ","'alima","il sut",382],["هُمْ","hum","ils, eux",370],["أَنَّ","anna","que (fait que)",366],["كُلّ","kull","tout, chaque",359],["لَمْ","lam","ne...pas (passé)",348],["ثُمَّ","thumma","puis, ensuite",341],["جَعَلَ","ja'ala","il fit, il établit",340],["رَسُول","rasuul","messager",332],["عَذَاب","'adhaab","châtiment",322],["سَمَاء","samaa'","ciel",310],["نَفْس","nafs","âme, soi-même",295],["كَفَرَ","kafara","il mécrut",289],["شَيْء","shay'","chose",283],["أَوْ","aw","ou",280],["جَاءَ","jaa'a","il vint",278],["عَمِلَ","'amila","il fit, il œuvra",276],["لَوْ","law","si (hypothétique)",276],["هَذَا","haadhaa","ceci, celui-ci",274],["آتَى","aataa","il donna",271],["رَأَى","ra'aa","il vit",271],["بَيْن","bayn","entre",266],["أَتَى","ataa","il vint, il apporta",264],["كِتَاب","kitaab","livre",260],["حَقّ","haqq","vérité, droit",247],["قَبْل","qabl","avant",242],["نَاس","naas","les gens",241],["إِذْ","idh","quand (passé)",239],["شَاءَ","shaa'a","il voulut",236],["أُولَئِكَ","ulaa'ika","ceux-là",208],["مُؤْمِن","mu'min","croyant",202],["بَعْدَ","ba'da","après",199],["عِنْدَ","'inda","auprès de, chez",197],["خَلَقَ","khalaqa","il créa",184],["أَنْزَلَ","anzala","il fit descendre, il révéla",183],["خَيْر","khayr","meilleur, bien",178],["سَبِيل","sabiil","chemin, voie",176],["كَذَّبَ","kadhdhaba","il traita de menteur",176],["دَعَا","da'aa","il invoqua, il appela",170],["أَمْر","amr","ordre, affaire",166],["اتَّقَى","ittaqaa","il craignit (Allah)",166],["لَمَّا","lammaa","quand, lorsque",165],["مَعَ","ma'a","avec",164],["عَلِيم","'aliim","omniscient",163],["بَعْض","ba'd","une partie, certains",157],["آخِر","aakhir","dernier, au-delà",155],["إِلَه","ilaah","dieu",147],["جَنَّة","janna","jardin, paradis",147],["غَيْر","ghayr","autre que",147],["نَار","naar","feu",145],["دُونَ","duuna","en dehors de, sans",144],["هَدَى","hadaa","il guida",144],["أَيُّهَا","ayyuhaa","ô (vocatif)",143],["حَتَّى","hattaa","jusqu'à",142],["أَرَادَ","araada","il voulut",139],["أَمْ","am","ou (bien)",137],["مُوسَى","muusaa","Moïse",136],["اتَّبَعَ","ittaba'a","il suivit",136],["أَنْتُمْ","antum","vous",135],["قَلْب","qalb","cœur",132],["عَبْد","'abd","serviteur, esclave",131],["أَرْسَلَ","arsala","il envoya",130],["لَكِنْ","laakin","mais",130],["ظَالِم","dhaalim","injuste",129],["كَافِرُونَ","kaafiruun","mécréants",129],["لَعَلَّ","la'alla","peut-être, afin que",129],["أَخَذَ","akhadha","il prit, il saisit",127],["أَهْل","ahl","famille, gens",127],["بَلْ","bal","mais plutôt",127],["اتَّخَذَ","ittakhadha","il prit (pour soi)",124],["عَبَدَ","'abada","il adora",122],["عَظِيم","'adhiim","immense, grandiose",120],["يَد","yad","main",120],["مُبِين","mubiin","clair, évident",119],["رَحِيم","rahiim","miséricordieux",116],["دُنْيَا","dunyaa","ce bas monde",115],["ذُو","dhuu","possesseur de",115],["رَحْمَة","rahma","miséricorde",114],["ظَلَمَ","dhalama","il opprima, il fit tort",110],["سَأَلَ","sa'ala","il demanda",106],["لَنْ","lan","ne...jamais (futur)",106],["وَجَدَ","wajada","il trouva",106],["أَجْر","ajr","récompense",105],["عِلْم","'ilm","science, savoir",105],["عَزِيز","'aziiz","puissant, tout-puissant",101],["أَخْرَجَ","akhraja","il fit sortir",99],["حَكِيم","hakiim","sage",97],["كَ","ka","comme",95],["أَكَلَ","akala","il mangea",93],["هَلْ","hal","est-ce que",93],["دِين","diin","religion, jugement",92],["قَوْل","qawl","parole, dire",92],["غَفُور","ghafuur","très pardonneur",91],["لَيْسَ","laysa","n'est pas",89],["شَيْطَان","shaytaan","démon, Satan",88],["فَعَلَ","fa'ala","il fit",88],["مِثْل","mithl","semblable, comme",88],["مَلَك","malak","ange",88],["نَظَرَ","nadhara","il regarda",87],["مَال","maal","richesse, bien",86],["نَحْنُ","nahnu","nous",86],["وَلِيّ","waliyy","protecteur, allié",86],["هُدًى","hudan","guidée, droit chemin",85],["ذَكَرَ","dhakara","il se souvint, il mentionna",84],["فَضْل","fadl","grâce, faveur",84],["لَيْل","layl","nuit",84],["خَافَ","khaafa","il craignit",83],["صَلاَة","salaah","prière",83],["قَتَلَ","qatala","il tua",83],["كَيْفَ","kayfa","comment",83],["أَوَّل","awwal","premier, ancien",82],["أَنْتَ","anta","tu, toi",81],["أَكْثَر","akthar","la plupart, plus",80],["بَنِينَ","baniin","fils, enfants",80],["رَجَعَ","raja'a","il retourna",79],["أَصْحَاب","ashaab","compagnons, gens de",78],["تَوَلَّى","tawallaa","il se détourna",78],["سَمِعَ","sami'a","il entendit",78],["أَمَرَ","amara","il ordonna",77],["جَهَنَّم","jahannam","Enfer",77],["حَيَاة","hayaah","vie",76],["دَخَلَ","dakhala","il entra",76],["ذِكْر","dhikr","rappel, mention",76],["زَوْج","zawj","époux, épouse, paire",76],["أَخ","akh","frère",75],["مِثْل","mithl","pareil à",75],["نَبِيّ","nabiyy","prophète",75],["أَحَد","ahad","quelqu'un, un seul",74],["خَالِد","khaalid","éternel, immortel",74],["فِرْعَوْن","fir'awn","Pharaon",74],["جَزَى","jazaa","il récompensa",73],["عَالَمِينَ","'aalamiin","mondes, univers",73],["أَطَاعَ","ataa'a","il obéit",72],["أَلِيم","aliim","douloureux",72],["أَوْحَى","awhaa","il révéla, il inspira",72],["وَجْه","wajh","visage",72],["أَشْرَكَ","ashraka","il associa (à Allah)",71],["أَلْقَى","alqaa","il jeta",71],["إِنْسَان","insaan","être humain",71],["بَيِّنَة","bayyina","preuve évidente",71],["عَمَل","'amal","œuvre, action",70],["آخَر","aakhar","autre",70],["أَيّ","ayy","quel, lequel",70],["قُرْآن","qur'aan","Coran",70],["قَلِيل","qaliil","peu",70],["قِيَامَة","qiyaama","résurrection",70],["وَعَدَ","wa'ada","il promit",69],["إِبْرَاهِيم","ibraahiim","Abraham",68],["أَنَا","anaa","je, moi",68],["أَنْفَقَ","anfaqa","il dépensa",66],["يَوْمَئِذٍ","yawma'idhin","ce jour-là",65],["بَيْت","bayt","maison",65],["صَالِح","saalih","vertueux, bon",65],["غَفَرَ","ghafara","il pardonna",65],["يَمِين","yamiin","droite, serment",64],["آبَاء","aabaa'","ancêtres, pères",64],["أَحَبَّ","ahabba","il aima",64],["أَصَابَ","asaaba","il frappa, il atteignit",64],["أَضَلَّ","adalla","il égara",64],["أُمَّة","umma","communauté, nation",64],["هِيَ","hiya","elle",64],["تَابَ","taaba","il se repentit",63],["كَثِير","kathiir","beaucoup, nombreux",63],["مَاء","maa'","eau",63],["ابْن","ibn","fils",63],["صَالِحَات","saalihaat","bonnes œuvres",62],["كَسَبَ","kasaba","il acquit, il gagna",62],["نَزَّلَ","nazzala","il fit descendre",62],["تَلاَ","talaa","il récita",61],["رَزَقَ","razaqa","il pourvut",61],["صَادِق","saadiq","véridique",59],["قَضَى","qadaa","il décréta, il décida",59],["نِسَاء","nisaa'","femmes",59],["نَصَرَ","nasara","il secourut",59],["صَبَرَ","sabara","il patienta",58],["نَذِير","nadhiir","avertisseur",58],["جَرَى","jaraa","il coula",57],["رَحْمَٰن","rahmaan","Tout Miséricordieux",57],["عَيْن","'ayn","source, œil",57],["قَرْيَة","qarya","cité, village",57],["نَهَار","nahaar","jour (journée)",57],["شَدِيد","shadiid","sévère, intense",56],["شَهِيد","shahiid","témoin",56],["مَسَّ","massa","il toucha",56],["وَلَد","walad","enfant, fils",56],["أَمَّا","ammaa","quant à",55],["أَنْتُمَا","antumaa","vous deux",55],["رِزْق","rizq","subsistance",55],["ضَرَبَ","daraba","il frappa, il cita",55],["أَقَامَ","aqaama","il établit",54],["قَاتَلَ","qaatala","il combattit",54],["نَهْر","nahr","rivière",54],["جَمِيع","jamii'","tous ensemble",53],["خَرَجَ","kharaja","il sortit",53],["ضَلَّ","dalla","il s'égara",53],["أَجَل","ajal","terme, échéance",52],["بَعَثَ","ba'atha","il ressuscita, il envoya",52],["خَلْق","khalq","création",52],["مُجْرِم","mujrim","criminel",52],["أَحْيَا","ahyaa","il fit vivre",51],["أَهْلَكَ","ahlaka","il détruisit",51],["بَصِير","basiir","voyant, clairvoyant",51],["تَحْتَ","tahta","sous",51],["تَذَكَّرَ","tadhakkara","il se souvint",51],["سُوء","suu'","mal, mauvais",50],["عَدُوّ","'aduww","ennemi",50],["مَوْت","mawt","mort",50],["نِعْمَة","ni'ma","bienfait, grâce",50],["افْتَرَى","iftaraa","il inventa (un mensonge)",50],["أَعْلَم","a'lam","plus savant",49],["زَادَ","zaada","il augmenta",49],["عَقَلَ","'aqala","il comprit, il raisonna",49],["غَيْب","ghayb","invisible, inconnu",49],["كَتَبَ","kataba","il écrivit, il prescrivit",49],["مُتَّقِينَ","muttaqiin","les pieux",49],["وَعْد","wa'd","promesse",49],["بَصَر","basar","vue, regard",48],["دَار","daar","demeure",48],["سَاعَة","saa'a","l'Heure (jugement dernier)",48],["مُلْك","mulk","royaume, souveraineté",48],["سَمِيع","samii'","qui entend tout",47],["ظَنَّ","dhanna","il pensa, il supposa",47],["أَب","ab","père",46],["شَكَرَ","shakara","il fut reconnaissant",46],["نَبَّأَ","nabba'a","il informa",46],["هَؤُلاَء","haa'ulaa'","ceux-ci",46],["أُولِي","ulii","possesseurs de",45],["إِيمَان","iimaan","foi",45],["حَكَمَ","hakama","il jugea",45],["خَبِير","khabiir","bien informé",45],["صِرَاط","siraat","voie, chemin",45],["قَدِير","qadiir","tout-puissant",45],["يَذَرُ","yadharu","il laisse, il délaisse",45],["أَنْذَرَ","andhara","il avertit",44],["حَسِبَ","hasiba","il pensa, il crut",44],["شَهِدَ","shahida","il témoigna",44],["صَدْر","sadr","poitrine",44],["مُشْرِك","mushrik","polythéiste, associateur",44],["مَلَكَتْ","malakat","elle posséda",44],["نَادَى","naadaa","il appela",44],["إِسْرَائِيل","israa'iil","Israël",43],["تِلْكَ","tilka","celle-là",43],["حَمْد","hamd","louange",43],["نُوح","nuuh","Noé",43],["نُور","nuur","lumière",43],["مَلَكَ","malaka","il posséda, il eut pouvoir",42],["أُدْخِلَ","udkhila","il fut admis",42],["جَزَاء","jazaa'","rétribution",42],["سَبَّحَ","sabbaha","il glorifia",42],["سَلاَم","salaam","paix",42],["سَوْفَ","sawfa","bientôt (futur)",42],["اسْتَطَاعَ","istataa'a","il put, il fut capable",41],["بَحْر","bahr","mer",41],["حَمَلَ","hamala","il porta",41],["سُبْحَان","subhaan","gloire à (Allah)",41],["عَذَّبَ","'adhdhaba","il châtia",41],["عَلَّمَ","'allama","il enseigna",41],["فَ","fa","alors, donc",41],["فَوْقَ","fawqa","au-dessus de",40],["أَرَى","araa","il montra",40],["بِئْسَ","bi'sa","quel mauvais...",40],["بَلَغَ","balagha","il atteignit",40],["تَرَكَ","taraka","il laissa",40],["تَوَكَّلَ","tawakkala","il se remit à (Allah)",40],["خَشِيَ","khashiya","il craignit",40],["شَرِيك","shariik","associé",40],["كَبِير","kabiir","grand",40],["وَيْل","wayl","malheur à",40],["اسْتَغْفَرَ","istaghfara","il demanda pardon",40],["اسْتَكْبَرَ","istakbara","il s'enorgueillit",40],["اهْتَدَى","ihtadaa","il se guida (bien)",39],["إِذْن","idhn","permission",39],["جَبَل","jabal","montagne",39]];
+const TOTAL_WORDS_QURAN = 77429;
+const PER = 20, NCH = Math.ceil(DATA.length / PER);
+const W = DATA.map((d, i) => ({ id: i, n: i + 1, ar: d[0], ph: d[1], fr: d[2], occ: d[3], ch: Math.floor(i / PER) }));
+const MAX_COVER = W.reduce((s, w) => s + w.occ, 0);
+
+/* ---------- icons ---------- */
+const IC = {
+  speaker: '<path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>',
+  star: '<path d="M12 2.5l2.9 6 6.6.8-4.9 4.6 1.3 6.6L12 17.3 6.1 20.5l1.3-6.6L2.5 9.3l6.6-.8z" fill="currentColor"/>',
+  flame: '<path d="M12 2c1 4 5 5.5 5 11a5 5 0 0 1-10 0c0-2.5 1.2-3.8 2.3-5 .3 1.6 1 2.5 2 2.8C10.8 8 11 5 12 2z" fill="currentColor"/>',
+  bolt: '<path d="M13 2L4 14h7l-1 8 9-12h-7z" fill="currentColor"/>',
+  heart: '<path d="M12 21s-7.5-4.6-9.5-9.3C1.2 8.4 3.3 5 6.7 5c2 0 3.5 1.1 5.3 3 1.8-1.9 3.3-3 5.3-3 3.4 0 5.5 3.4 4.2 6.7C19.5 16.4 12 21 12 21z" fill="currentColor"/>',
+  lock: '<rect x="5" y="10" width="14" height="10" rx="2" fill="currentColor"/><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="currentColor" stroke-width="2" fill="none"/>',
+  cards: '<rect x="3" y="6" width="13" height="15" rx="2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M8 3h11a2 2 0 0 1 2 2v13" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>',
+  ear: '<path d="M7 9a5 5 0 0 1 10 0c0 3-3 4-3 7a3 3 0 0 1-5.5 1.6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M10 9.5a2 2 0 0 1 4 0" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>',
+  puzzle: '<path d="M4 7h4a2 2 0 1 1 4 0h4v4a2 2 0 1 1 0 4v4h-4a2 2 0 1 0-4 0H4v-4a2 2 0 1 0 0-4z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/>',
+  trophy: '<path d="M7 4h10v4a5 5 0 0 1-10 0zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4M12 13v4M8 20h8" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+  search: '<circle cx="11" cy="11" r="6.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M16 16l4.5 4.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+  gear: '<circle cx="12" cy="12" r="3.2" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 2.8v2.6M12 18.6v2.6M21.2 12h-2.6M5.4 12H2.8M18.5 5.5l-1.8 1.8M7.3 16.7l-1.8 1.8M18.5 18.5l-1.8-1.8M7.3 7.3L5.5 5.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+  back: '<path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+  ab: '<path d="M3 18l4-11 4 11M4.5 14h5M14 7h4.5a2.5 2.5 0 0 1 0 5H14zm0 5h5a3 3 0 0 1 0 6h-5z" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/>',
+  ba: '<path d="M4 12h16M14 6l6 6-6 6" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+  repeat: '<path d="M4 11a8 8 0 0 1 14-5l2 2M20 13a8 8 0 0 1-14 5l-2-2M20 4v4h-4M4 20v-4h4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+  clock: '<circle cx="12" cy="13" r="8" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 9v4l3 2M9 2h6" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/>',
+  book: '<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM4 21V5M8 7h7" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+  check: '<path d="M5 12.5l4.5 4.5L19 7" stroke="currentColor" stroke-width="2.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>',
+  x: '<path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>'
+};
+const ic = (k, cls = 'i') => `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true">${IC[k]}</svg>`;
+const AD = n => String(n).replace(/\d/g, d => '٠١٢٣٤٥٦٧٨٩'[d]);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const today = () => { const d = new Date(); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); };
+const yesterday = () => { const d = new Date(Date.now() - 864e5); return d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate(); };
+
+/* ---------- state ---------- */
+const KEY = 'coran300.v1';
+const DEF = { xp: 0, m: {}, stars: {}, wrong: [], streak: { n: 0, last: '' }, day: { d: '', xp: 0 }, blitz: 0, rate: 0.75, sfx: true, unlockAll: false, voice: '', goal: 50 };
+let S = (() => { try { const r = JSON.parse(localStorage.getItem(KEY)); return Object.assign({}, DEF, r || {}); } catch (e) { return Object.assign({}, DEF); } })();
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch (e) {} };
+
+const mastery = id => S.m[id] || 0;
+const isKnown = id => mastery(id) >= 3;
+const knownCount = () => W.filter(w => isKnown(w.id)).length;
+const coverage = () => W.reduce((s, w) => s + (isKnown(w.id) ? w.occ : 0), 0) / TOTAL_WORDS_QURAN;
+const need = l => 50 * l * (l - 1);
+const level = () => { let l = 1; while (S.xp >= need(l + 1)) l++; return l; };
+const unlocked = c => S.unlockAll || c === 0 || (S.stars[c - 1] || 0) >= 1;
+const todayXp = () => S.day.d === today() ? S.day.xp : 0;
+const streakNow = () => (S.streak.last === today() || S.streak.last === yesterday()) ? S.streak.n : 0;
+
+function addXp(n) {
+  if (n <= 0) return;
+  const before = level();
+  S.xp += n;
+  if (S.day.d !== today()) S.day = { d: today(), xp: 0 };
+  const hadGoal = S.day.xp >= S.goal;
+  S.day.xp += n;
+  if (S.streak.last !== today()) { S.streak.n = S.streak.last === yesterday() ? S.streak.n + 1 : 1; S.streak.last = today(); }
+  save(); renderChips();
+  if (level() > before) toast('Niveau ' + level() + ' atteint !');
+  else if (!hadGoal && S.day.xp >= S.goal) toast('Objectif du jour rempli. Série : ' + S.streak.n + ' j');
+}
+function mark(id, ok) {
+  const v = mastery(id);
+  S.m[id] = ok ? Math.min(5, v + 1) : Math.max(0, v - 1);
+  if (!ok && !S.wrong.includes(id)) S.wrong.push(id);
+  if (ok && S.wrong.includes(id) && S.m[id] >= 2) S.wrong = S.wrong.filter(x => x !== id);
+  save();
+}
+
+/* ---------- audio ---------- */
+let voices = [], arVoice = null;
+function loadVoices() {
+  if (!('speechSynthesis' in window)) return;
+  voices = speechSynthesis.getVoices().filter(v => /^ar/i.test(v.lang));
+  const pref = v => (v.name === S.voice ? 100 : 0) + (/ar[-_]SA/i.test(v.lang) ? 10 : 0) + (/natural|neural|premium|enhanced|google|majed|maged|hamed|zariyah/i.test(v.name) ? 5 : 0);
+  arVoice = voices.slice().sort((a, b) => pref(b) - pref(a))[0] || null;
+}
+if ('speechSynthesis' in window) { loadVoices(); speechSynthesis.onvoiceschanged = () => { loadVoices(); if (document.getElementById('voiceSel')) openSettings(); }; }
+function speak(text, rate) {
+  if (!('speechSynthesis' in window)) { toast("Ce navigateur ne lit pas l'audio arabe"); return; }
+  try {
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = arVoice ? arVoice.lang : 'ar-SA';
+    if (arVoice) u.voice = arVoice;
+    u.rate = rate || S.rate;
+    speechSynthesis.speak(u);
+  } catch (e) {}
+}
+const say = id => speak(W[id].ar);
+
+let actx = null;
+function sfx(type) {
+  if (!S.sfx) return;
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    const notes = { ok: [660, 880], ko: [220, 170], win: [523, 659, 784, 1046], tap: [500] }[type];
+    notes.forEach((f, i) => {
+      const o = actx.createOscillator(), g = actx.createGain(), t = actx.currentTime + i * 0.09;
+      o.type = type === 'ko' ? 'triangle' : 'sine'; o.frequency.value = f;
+      g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(0.18, t + 0.02); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.22);
+      o.connect(g).connect(actx.destination); o.start(t); o.stop(t + 0.25);
+    });
+  } catch (e) {}
+}
+
+/* ---------- ui helpers ---------- */
+const $app = document.getElementById('app');
+let toastT;
+function toast(msg) {
+  const h = document.getElementById('toastHost');
+  h.innerHTML = `<div class="toast" role="status">${esc(msg)}</div>`;
+  clearTimeout(toastT); toastT = setTimeout(() => h.innerHTML = '', 2600);
+}
+function badge(c, state, pct) {
+  const fill = state === 'done' ? 'var(--gold-bright)' : state === 'locked' ? 'var(--surface-2)' : 'var(--lapis)';
+  const txt = state === 'done' ? '#1D1404' : state === 'locked' ? 'var(--muted)' : 'var(--on-lapis)';
+  const R = 44, C = 2 * Math.PI * R;
+  return `<svg class="star-badge" viewBox="0 0 100 100" aria-hidden="true">
+    <circle cx="50" cy="50" r="${R}" fill="none" stroke="var(--surface-2)" stroke-width="5"/>
+    <circle cx="50" cy="50" r="${R}" fill="none" stroke="var(--good)" stroke-width="5" stroke-linecap="round" stroke-dasharray="${C * pct} ${C}" transform="rotate(-90 50 50)"/>
+    <g fill="${fill}"><rect x="27" y="27" width="46" height="46" rx="3"/><rect x="27" y="27" width="46" height="46" rx="3" transform="rotate(45 50 50)"/></g>
+    <text x="50" y="52" text-anchor="middle" dominant-baseline="middle" font-family="Amiri,serif" font-size="28" font-weight="700" fill="${txt}">${AD(c + 1)}</text></svg>`;
+}
+const starsHtml = n => [0, 1, 2].map(i => `<span class="${i < n ? 'on' : ''}">${ic('star')}</span>`).join('');
+const chWords = c => W.slice(c * PER, c * PER + PER);
+const chMastery = c => chWords(c).filter(w => isKnown(w.id)).length / chWords(c).length;
+const dots = id => `<div class="dots" title="Maîtrise ${mastery(id)}/5">${[1, 2, 3, 4, 5].map(i => `<i class="${mastery(id) >= i ? 'on' : ''}"></i>`).join('')}</div>`;
+
+function renderChips() {
+  document.getElementById('chips').innerHTML =
+    `<span class="chip gold" title="Série de jours">${ic('flame')}<span class="tnum">${streakNow()}</span></span>
+     <span class="chip lapis" title="Points d'expérience">${ic('bolt')}<span class="tnum">${S.xp}</span></span>
+     <span class="chip" title="Niveau">Niv. ${level()}</span>`;
+}
+document.getElementById('setBtn').innerHTML = ic('gear');
+document.getElementById('setBtn').onclick = openSettings;
+document.getElementById('homeBtn').onclick = () => go('home');
+
+/* ---------- routing ---------- */
+let view = { name: 'home' }, G = null, blitzTimer = null;
+function go(name, p = {}) {
+  clearInterval(blitzTimer);
+  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  view = Object.assign({ name }, p);
+  const h = name === 'chapter' ? 'chapitre-' + (p.c + 1) : name === 'lexique' ? 'lexique' : '';
+  if (name !== 'game' && name !== 'result') { try { if (location.hash.slice(1) !== h) history.replaceState(null, '', h ? '#' + h : location.pathname + location.search); } catch (e) {} }
+  render(); window.scrollTo(0, 0);
+}
+function fromHash() {
+  const h = location.hash.slice(1); let m;
+  if ((m = h.match(/^chapitre-(\d+)$/)) && +m[1] >= 1 && +m[1] <= NCH && unlocked(+m[1] - 1)) go('chapter', { c: +m[1] - 1 });
+  else if (h === 'lexique') go('lexique'); else go('home');
+}
+window.addEventListener('hashchange', fromHash);
+function render() {
+  renderChips();
+  ({ home: renderHome, chapter: renderChapter, game: renderGame, result: renderResult, lexique: renderLexique })[view.name]();
+}
+
+/* ---------- home ---------- */
+function currentChapter() { for (let c = 0; c < NCH; c++) if (unlocked(c) && !(S.stars[c] >= 1)) return c; return NCH - 1; }
+function renderHome() {
+  const cov = coverage(), known = knownCount(), lv = level(), cur = currentChapter();
+  const lvPct = (S.xp - need(lv)) / (need(lv + 1) - need(lv));
+  const goalPct = Math.min(1, todayXp() / S.goal);
+  $app.innerHTML = `
+  <section class="hero">
+    <div class="hero-text">
+      <div class="ar big" lang="ar">كَلِمَاتُ ٱلْقُرْآن</div>
+      <h1>Apprenez les 300 mots qui reviennent le plus dans le Coran</h1>
+      <p>${NCH} chapitres de ${PER} mots, classés du plus fréquent au moins fréquent. Écoutez, retournez les cartes, gagnez des étoiles. Chaque mot maîtrisé vous fait reconnaître une part plus grande du texte.</p>
+      <div class="row" style="justify-content:flex-start;margin-top:4px">
+        <button class="btn" id="contBtn">${ic('bolt')} ${known ? 'Continuer' : 'Commencer'} · chapitre ${cur + 1}</button>
+        <button class="btn ghost" data-go="lexique">${ic('book')} Lexique</button>
+      </div>
+    </div>
+    <div class="cover">
+      <div class="eyebrow">Ce que vous reconnaissez du Coran</div>
+      <div><span class="num tnum">${(cov * 100).toFixed(1).replace('.', ',')} %</span> <span class="muted">des ${TOTAL_WORDS_QURAN.toLocaleString('fr-FR')} mots du texte</span></div>
+      <div class="bar" title="Plafond : les 300 mots couvrent ${(MAX_COVER / TOTAL_WORDS_QURAN * 100).toFixed(0)} %"><i class="ceiling" style="width:${MAX_COVER / TOTAL_WORDS_QURAN * 100}%"></i><i style="width:${cov * 100}%"></i></div>
+      <div class="muted" style="font-size:13px">Les 300 mots couvrent ${(MAX_COVER / TOTAL_WORDS_QURAN * 100).toFixed(0)} % des occurrences (zone claire). Un mot compte quand il est maîtrisé : 3 bonnes réponses.</div>
+      <div class="statrow">
+        <div class="stat"><b class="tnum">${known}</b><span>mots maîtrisés / 300</span></div>
+        <div class="stat"><b class="tnum">${lv}</b><span>niveau</span><div class="bar gold" style="height:5px;margin-top:5px"><i style="width:${lvPct * 100}%"></i></div></div>
+        <div class="stat"><b class="tnum">${todayXp()}<small class="muted" style="font-size:13px">/${S.goal}</small></b><span>XP aujourd'hui</span><div class="bar" style="height:5px;margin-top:5px"><i style="width:${goalPct * 100}%;background:var(--good)"></i></div></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sec"><h2>Entraînement libre</h2></div>
+  <div class="quick">
+    <button class="qa gold" id="blitzBtn"><span class="ico">${ic('clock')}</span><span><b>Défi 60 secondes</b><small>Le plus de bonnes réponses possible. Record : ${S.blitz}</small></span></button>
+    <button class="qa" id="revBtn" ${S.wrong.length ? '' : 'disabled'}><span class="ico">${ic('repeat')}</span><span><b>Réviser mes erreurs</b><small>${S.wrong.length ? S.wrong.length + ' mot' + (S.wrong.length > 1 ? 's' : '') + ' à revoir' : 'Aucune erreur pour le moment'}</small></span></button>
+    <button class="qa" data-go="lexique"><span class="ico">${ic('search')}</span><span><b>Lexique complet</b><small>Les 300 mots, avec audio et recherche</small></span></button>
+  </div>
+
+  <div class="sec"><h2>Les ${NCH} chapitres</h2><span class="muted" style="font-size:14px">Obtenez au moins 1 étoile à l'épreuve pour ouvrir le chapitre suivant</span></div>
+  <div class="grid">
+    ${Array.from({ length: NCH }, (_, c) => {
+      const ws = chWords(c), un = unlocked(c), st = S.stars[c] || 0, pct = chMastery(c);
+      const state = !un ? 'locked' : st >= 1 ? 'done' : 'open';
+      return `<button class="ch ${c === cur && un ? 'current' : ''}" data-ch="${c}" ${un ? '' : 'disabled aria-disabled="true"'} aria-label="Chapitre ${c + 1}${un ? '' : ' (verrouillé)'}">
+        ${un ? '' : `<span class="lock">${ic('lock')}</span>`}
+        ${badge(c, state, pct)}
+        <span class="title">Chapitre ${c + 1}</span>
+        <span class="range tnum">Mots ${ws[0].n} à ${ws[ws.length - 1].n}</span>
+        <span class="preview" lang="ar">${ws.slice(0, 3).map(w => w.ar).join(' · ')}</span>
+        <span class="stars">${starsHtml(st)}</span>
+      </button>`;
+    }).join('')}
+  </div>
+  <footer>Liste établie à partir du corpus coranique (77 429 mots). Les mots sont donnés sous une forme de référence : dans le texte, ils apparaissent conjugués ou déclinés. L'audio utilise la voix arabe de votre appareil ; elle sert de repère de prononciation et ne remplace pas l'écoute d'un récitateur.</footer>`;
+  $app.querySelectorAll('[data-ch]').forEach(b => b.onclick = () => go('chapter', { c: +b.dataset.ch }));
+  $app.querySelectorAll('[data-go]').forEach(b => b.onclick = () => go(b.dataset.go));
+  document.getElementById('contBtn').onclick = () => go('chapter', { c: cur });
+  document.getElementById('blitzBtn').onclick = startBlitz;
+  document.getElementById('revBtn').onclick = startReview;
+}
+
+/* ---------- chapter ---------- */
+function wordRow(w) {
+  return `<div class="wrow">
+    <span class="n tnum">#${w.n}</span>
+    <button class="play" data-say="${w.id}" aria-label="Écouter ${esc(w.ph)}">${ic('speaker')}</button>
+    <div class="w-ar ar" lang="ar">${w.ar}</div>
+    <div class="w-fr"><div class="w-ph">${esc(w.ph)}</div>${esc(w.fr)}</div>
+    <div class="w-meta"><div class="w-occ tnum">${w.occ.toLocaleString('fr-FR')} fois</div>${dots(w.id)}</div>
+  </div>`;
+}
+function renderChapter() {
+  const c = view.c, ws = chWords(c), st = S.stars[c] || 0, known = ws.filter(w => isKnown(w.id)).length;
+  const modes = [
+    ['cards', 'cards', 'Cartes', 'Découvrez chaque mot, écoutez-le, retournez la carte', '+2 XP / carte'],
+    ['ar2fr', 'ab', 'Arabe → français', 'Lisez le mot arabe, trouvez son sens', '+10 XP / bonne réponse'],
+    ['fr2ar', 'ba', 'Français → arabe', 'Lisez le sens, trouvez le mot arabe', '+10 XP / bonne réponse'],
+    ['listen', 'ear', 'Écoute', 'Écoutez la voix et reconnaissez le mot', '+12 XP / bonne réponse'],
+    ['pairs', 'puzzle', 'Paires', 'Reliez chaque mot arabe à son sens', '+5 XP / paire'],
+    ['exam', 'trophy', 'Épreuve du chapitre', '15 questions, 3 vies. Gagnez jusqu\'à 3 étoiles', 'Bonus +50 XP']
+  ];
+  $app.innerHTML = `
+  <button class="back" id="bk">${ic('back')} Tous les chapitres</button>
+  <div class="chhead">
+    ${badge(c, st >= 1 ? 'done' : 'open', known / ws.length)}
+    <div style="min-width:0">
+      <div class="eyebrow">Mots ${ws[0].n} à ${ws[ws.length - 1].n}</div>
+      <h1>Chapitre ${c + 1}</h1>
+      <div class="muted" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span class="stars" style="display:flex;color:var(--line)">${starsHtml(st).replace(/class="on"/g, 'class="on" style="color:var(--gold-bright)"')}</span> ${known}/${ws.length} mots maîtrisés</div>
+    </div>
+  </div>
+  <div class="modes">
+    ${modes.map(([k, i, t, d, x]) => `<button class="mode ${k === 'exam' ? 'exam' : ''}" data-mode="${k}"><span class="ico">${ic(i)}</span><b>${t}</b><small>${d}</small><span class="xpbadge">${x}</span></button>`).join('')}
+  </div>
+  <div class="sec"><h2>Les ${ws.length} mots</h2><button class="btn ghost" id="playAll">${ic('speaker')} Tout écouter</button></div>
+  <div class="wordlist">${ws.map(wordRow).join('')}</div>
+  ${c < NCH - 1 && unlocked(c + 1) ? `<div class="row" style="justify-content:flex-end"><button class="btn ghost" id="nextCh">Chapitre ${c + 2} ${ic('ba')}</button></div>` : ''}`;
+  document.getElementById('bk').onclick = () => go('home');
+  $app.querySelectorAll('[data-mode]').forEach(b => b.onclick = () => startMode(b.dataset.mode, c));
+  bindSay();
+  const nx = document.getElementById('nextCh'); if (nx) nx.onclick = () => go('chapter', { c: c + 1 });
+  document.getElementById('playAll').onclick = () => playSeq(ws.map(w => w.id));
+}
+function bindSay() { $app.querySelectorAll('[data-say]').forEach(b => b.onclick = e => { e.stopPropagation(); say(+b.dataset.say); }); }
+function playSeq(ids) {
+  if (!('speechSynthesis' in window)) return toast("Ce navigateur ne lit pas l'audio arabe");
+  speechSynthesis.cancel();
+  ids.forEach(id => { const u = new SpeechSynthesisUtterance(W[id].ar); u.lang = arVoice ? arVoice.lang : 'ar-SA'; if (arVoice) u.voice = arVoice; u.rate = S.rate; speechSynthesis.speak(u); });
+}
+
+/* ---------- game engine ---------- */
+function distractors(w, field, pool, n = 3) {
+  const seen = new Set([w[field]]);
+  const near = shuffle(pool.filter(x => x.id !== w.id));
+  const far = shuffle(W.filter(x => x.id !== w.id));
+  const out = [];
+  for (const x of near.concat(far)) { if (out.length >= n) break; if (!seen.has(x[field])) { seen.add(x[field]); out.push(x); } }
+  return out;
+}
+function makeQ(w, type, pool) {
+  const field = type === 'ar2fr' ? 'fr' : 'ar';
+  return { w, type, opts: shuffle([w].concat(distractors(w, field, pool))) };
+}
+function startMode(mode, c) {
+  const ws = chWords(c);
+  if (mode === 'cards') { G = { kind: 'cards', c, list: shuffle(ws), i: 0, flipped: false, knew: 0, xp: 0, missed: [] }; return go('game'); }
+  if (mode === 'pairs') { const s = shuffle(ws); G = { kind: 'pairs', c, rounds: [s.slice(0, 7), s.slice(7, 14), s.slice(14)], r: 0, xp: 0, errors: 0, matched: 0, sel: null, missed: [] }; setupPairsRound(); return go('game'); }
+  if (mode === 'listen' && !('speechSynthesis' in window)) return toast("L'écoute nécessite la synthèse vocale du navigateur");
+  let qs;
+  if (mode === 'exam') {
+    const types = ['ar2fr', 'fr2ar', 'ar2fr', 'listen'].filter(t => t !== 'listen' || ('speechSynthesis' in window));
+    qs = shuffle(ws).slice(0, 15).map((w, i) => makeQ(w, types[i % types.length], ws));
+  } else qs = shuffle(ws).map(w => makeQ(w, mode, ws));
+  G = { kind: mode === 'exam' ? 'exam' : 'quiz', mode, c, qs, i: 0, ok: 0, combo: 0, best: 0, xp: 0, lives: mode === 'exam' ? 3 : null, answered: null, missed: [] };
+  go('game');
+}
+function startReview() {
+  const ids = shuffle(S.wrong).slice(0, 15);
+  if (!ids.length) return;
+  const pool = ids.map(id => W[id]);
+  G = { kind: 'quiz', mode: 'review', c: null, qs: pool.map((w, i) => makeQ(w, i % 2 ? 'fr2ar' : 'ar2fr', pool.length >= 4 ? pool : chWords(w.ch))), i: 0, ok: 0, combo: 0, best: 0, xp: 0, lives: null, answered: null, missed: [] };
+  go('game');
+}
+function startBlitz() {
+  const pool = W.filter(w => unlocked(w.ch));
+  G = { kind: 'blitz', pool, q: null, ok: 0, combo: 0, best: 0, xp: 0, t: 60, answered: null, missed: [], total: 0 };
+  nextBlitzQ(); go('game');
+  blitzTimer = setInterval(() => {
+    G.t--; const el = document.getElementById('tm');
+    if (el) { el.textContent = G.t; el.classList.toggle('low', G.t <= 10); }
+    if (G.t <= 0) { clearInterval(blitzTimer); finish(); }
+  }, 1000);
+}
+function nextBlitzQ() {
+  const w = G.pool[Math.floor(Math.random() * G.pool.length)];
+  const t = Math.random() < .5 ? 'ar2fr' : 'fr2ar';
+  G.q = makeQ(w, t, W.slice(Math.max(0, w.id - 30), w.id + 30)); G.answered = null;
+}
+
+function renderGame() {
+  if (G.kind === 'cards') return renderCards();
+  if (G.kind === 'pairs') return renderPairs();
+  const q = G.kind === 'blitz' ? G.q : G.qs[G.i];
+  const total = G.kind === 'blitz' ? null : G.qs.length;
+  const prog = G.kind === 'blitz' ? G.t / 60 : (G.i + (G.answered ? 1 : 0)) / total;
+  const w = q.w, a = G.answered;
+  let prompt;
+  if (q.type === 'ar2fr') prompt = `<div class="qlabel">Que signifie ce mot ?</div><div class="prompt-ar ar" lang="ar">${w.ar}</div><button class="play" data-say="${w.id}" aria-label="Écouter">${ic('speaker')}</button>`;
+  else if (q.type === 'fr2ar') prompt = `<div class="qlabel">Quel mot arabe signifie…</div><div class="prompt-fr">${esc(w.fr)}</div>`;
+  else prompt = `<div class="qlabel">Écoutez, puis choisissez le mot entendu</div><button class="bigplay" data-say="${w.id}" aria-label="Écouter le mot">${ic('speaker')}</button><button class="btn ghost" id="slow" style="padding:6px 12px;font-size:14px">Plus lentement</button>`;
+  const isAr = q.type !== 'ar2fr';
+  $app.innerHTML = `<div class="game">
+    <div class="ghead">
+      <button class="iconbtn" id="quit" aria-label="Quitter">${ic('x')}</button>
+      <div class="bar"><i style="width:${prog * 100}%;${G.kind === 'blitz' ? 'background:var(--gold-bright)' : ''}"></i></div>
+      ${G.lives !== null ? `<span class="lives" aria-label="${G.lives} vies">${[0, 1, 2].map(i => `<span class="${i < G.lives ? '' : 'off'}">${ic('heart')}</span>`).join('')}</span>` : ''}
+      ${G.kind === 'blitz' ? `<span class="timer tnum ${G.t <= 10 ? 'low' : ''}" id="tm">${G.t}</span>` : ''}
+      <span class="combo">${G.combo >= 2 ? '×' + G.combo : ''}</span>
+    </div>
+    <div class="card">${prompt}</div>
+    <div class="opts">${q.opts.map((o, i) => {
+      let cls = '';
+      if (a) { if (o.id === w.id) cls = 'right'; else if (o.id === a.pick) cls = 'wrong'; }
+      return `<button class="opt ${isAr ? 'ar-opt' : ''} ${cls}" data-pick="${o.id}" ${a ? 'disabled' : ''}><span class="k">${i + 1}</span>${isAr ? `<span lang="ar" dir="rtl">${o.ar}</span>` : esc(o.fr)}</button>`;
+    }).join('')}</div>
+    ${a && G.kind !== 'blitz' ? `<div class="feedback ${a.ok ? 'ok' : 'ko'}">
+        <div><b>${a.ok ? ['Bravo !', 'Excellent !', 'Parfait !', 'Bien vu !'][Math.floor(Math.random() * 4)] : 'Réponse :'}</b>
+        <span class="sol"> <span class="ar" lang="ar" style="font-size:22px">${w.ar}</span> · <b>${esc(w.ph)}</b> · ${esc(w.fr)}</span></div>
+        <button class="btn ${a.ok ? 'okb' : 'kob'}" id="nextQ">Continuer</button></div>` : ''}
+    <p class="muted" style="text-align:center;font-size:13px;margin-top:14px">Raccourcis : touches 1 à 4, puis Entrée</p>
+  </div>`;
+  bindSay();
+  document.getElementById('quit').onclick = () => { clearInterval(blitzTimer); G.kind === 'blitz' || G.c === null ? go('home') : go('chapter', { c: G.c }); };
+  const sl = document.getElementById('slow'); if (sl) sl.onclick = () => speak(w.ar, Math.max(0.4, S.rate - 0.3));
+  $app.querySelectorAll('[data-pick]').forEach(b => b.onclick = () => answer(+b.dataset.pick));
+  const nq = document.getElementById('nextQ'); if (nq) { nq.onclick = nextQ; nq.focus(); }
+  if (!a && (q.type === 'listen' || (q.type === 'ar2fr' && G.kind !== 'blitz'))) setTimeout(() => say(w.id), 250);
+}
+function answer(pick) {
+  if (G.answered) return;
+  const q = G.kind === 'blitz' ? G.q : G.qs[G.i], ok = pick === q.w.id;
+  G.answered = { pick, ok };
+  mark(q.w.id, ok);
+  if (ok) {
+    G.ok++; G.combo++; G.best = Math.max(G.best, G.combo);
+    const gain = (q.type === 'listen' ? 12 : 10) + Math.min(G.combo - 1, 5) * 2;
+    G.xp += gain; addXp(gain); sfx('ok');
+  } else {
+    G.combo = 0; sfx('ko'); G.missed.push(q.w.id);
+    if (G.lives !== null) G.lives--;
+  }
+  if (G.kind === 'blitz') { G.total++; renderGame(); setTimeout(() => { if (G && G.kind === 'blitz' && G.t > 0) { nextBlitzQ(); renderGame(); } }, ok ? 350 : 900); return; }
+  if (ok && q.type === 'fr2ar') say(q.w.id);
+  renderGame();
+}
+function nextQ() {
+  if (G.lives !== null && G.lives <= 0) return finish(true);
+  G.i++; G.answered = null;
+  if (G.i >= G.qs.length) return finish();
+  renderGame();
+}
+
+/* cards */
+function renderCards() {
+  const w = G.list[G.i];
+  $app.innerHTML = `<div class="game">
+    <div class="ghead"><button class="iconbtn" id="quit" aria-label="Quitter">${ic('x')}</button><div class="bar"><i style="width:${G.i / G.list.length * 100}%"></i></div><span class="muted tnum">${G.i + 1}/${G.list.length}</span></div>
+    <button class="flip ${G.flipped ? 'on' : ''}" id="flip" aria-label="Retourner la carte">
+      <div class="flip-in">
+        <div class="face"><div class="eyebrow">Mot n° ${w.n} · ${w.occ.toLocaleString('fr-FR')} occurrences</div><div class="prompt-ar ar" lang="ar">${w.ar}</div><div class="muted">Touchez pour retourner</div></div>
+        <div class="face back"><div class="ar" lang="ar" style="font-size:40px">${w.ar}</div><div class="ph">${esc(w.ph)}</div><div class="fr">${esc(w.fr)}</div></div>
+      </div>
+    </button>
+    <div class="row">
+      <button class="btn ghost" id="sayBtn">${ic('speaker')} Écouter</button>
+      ${G.flipped ? `<button class="btn kob" id="no">${ic('repeat')} À revoir</button><button class="btn okb" id="yes">${ic('check')} Je le savais</button>` : `<button class="btn" id="show">Voir la réponse</button>`}
+    </div>
+    <p class="muted" style="text-align:center;font-size:13px;margin-top:14px">Raccourcis : Espace pour retourner, ← à revoir, → je le savais</p>
+  </div>`;
+  document.getElementById('quit').onclick = () => go('chapter', { c: G.c });
+  const flip = () => { G.flipped = !G.flipped; sfx('tap'); renderCards(); };
+  document.getElementById('flip').onclick = flip;
+  document.getElementById('sayBtn').onclick = () => say(w.id);
+  const sh = document.getElementById('show'); if (sh) sh.onclick = flip;
+  const y = document.getElementById('yes'); if (y) y.onclick = () => cardNext(true);
+  const n = document.getElementById('no'); if (n) n.onclick = () => cardNext(false);
+  if (!G.flipped && !G.spoke) { G.spoke = true; setTimeout(() => say(w.id), 250); }
+}
+function cardNext(knew) {
+  const w = G.list[G.i];
+  if (knew) { G.knew++; mark(w.id, true); sfx('ok'); } else { G.missed.push(w.id); if (!S.wrong.includes(w.id)) { S.wrong.push(w.id); save(); } }
+  G.xp += 2; addXp(2);
+  G.i++; G.flipped = false; G.spoke = false;
+  if (G.i >= G.list.length) return finish();
+  renderCards();
+}
+
+/* pairs */
+function setupPairsRound() {
+  const set = G.rounds[G.r];
+  G.left = shuffle(set); G.right = shuffle(set); G.done = new Set(); G.sel = null; G.bad = null;
+}
+function renderPairs() {
+  const totalPairs = G.rounds.reduce((s, r) => s + r.length, 0);
+  $app.innerHTML = `<div class="game">
+    <div class="ghead"><button class="iconbtn" id="quit" aria-label="Quitter">${ic('x')}</button><div class="bar"><i style="width:${G.matched / totalPairs * 100}%"></i></div><span class="muted tnum">Manche ${G.r + 1}/${G.rounds.length}</span></div>
+    <p class="qlabel" style="text-align:center;margin:0 0 12px">Touchez un mot arabe, puis son sens</p>
+    <div class="pairs">
+      <div class="col">${G.left.map(w => `<button class="tile ar-t ${G.done.has(w.id) ? 'done' : ''} ${G.sel && G.sel.side === 'L' && G.sel.id === w.id ? 'sel' : ''} ${G.bad && G.bad.L === w.id ? 'bad' : ''}" data-l="${w.id}" lang="ar" dir="rtl">${w.ar}</button>`).join('')}</div>
+      <div class="col">${G.right.map(w => `<button class="tile ${G.done.has(w.id) ? 'done' : ''} ${G.sel && G.sel.side === 'R' && G.sel.id === w.id ? 'sel' : ''} ${G.bad && G.bad.R === w.id ? 'bad' : ''}" data-r="${w.id}">${esc(w.fr)}</button>`).join('')}</div>
+    </div>
+    <p class="muted" style="text-align:center;font-size:13px;margin-top:14px">Erreurs : <b class="tnum">${G.errors}</b></p>
+  </div>`;
+  document.getElementById('quit').onclick = () => go('chapter', { c: G.c });
+  $app.querySelectorAll('[data-l]').forEach(b => b.onclick = () => pick('L', +b.dataset.l));
+  $app.querySelectorAll('[data-r]').forEach(b => b.onclick = () => pick('R', +b.dataset.r));
+}
+function pick(side, id) {
+  G.bad = null;
+  if (side === 'L') say(id);
+  if (!G.sel || G.sel.side === side) { G.sel = { side, id }; sfx('tap'); return renderPairs(); }
+  const L = side === 'L' ? id : G.sel.id, R = side === 'R' ? id : G.sel.id;
+  if (L === R) { G.done.add(L); G.matched++; G.xp += 5; addXp(5); mark(L, true); sfx('ok'); }
+  else { G.errors++; G.bad = { L, R }; sfx('ko'); mark(L, false); if (!G.missed.includes(L)) G.missed.push(L); }
+  G.sel = null;
+  if (G.done.size === G.rounds[G.r].length) {
+    G.r++;
+    if (G.r >= G.rounds.length) return finish();
+    setTimeout(() => { setupPairsRound(); renderPairs(); }, 450);
+  }
+  renderPairs();
+}
+
+/* ---------- results ---------- */
+function finish(failed) {
+  clearInterval(blitzTimer);
+  let r = { kind: G.kind, xp: G.xp, missed: [...new Set(G.missed)], c: G.c };
+  if (G.kind === 'cards') { r.title = 'Cartes terminées'; r.stats = [[G.knew + '/' + G.list.length, 'connus'], ['+' + G.xp, 'XP'], [chWords(G.c).filter(w => isKnown(w.id)).length + '/20', 'maîtrisés']]; }
+  else if (G.kind === 'pairs') { r.title = G.errors === 0 ? 'Sans faute !' : 'Toutes les paires trouvées'; r.stats = [[G.matched, 'paires'], [G.errors, 'erreurs'], ['+' + G.xp, 'XP']]; if (G.errors === 0) { G.xp += 20; addXp(20); r.stats[2][0] = '+' + G.xp; } }
+  else if (G.kind === 'blitz') {
+    const rec = G.ok > S.blitz; if (rec) { S.blitz = G.ok; save(); }
+    r.title = rec ? 'Nouveau record !' : 'Temps écoulé'; r.stats = [[G.ok, 'bonnes réponses'], [S.blitz, 'record'], ['+' + G.xp, 'XP']]; r.win = rec;
+  } else {
+    const n = failed ? G.i + 1 : G.qs.length, acc = G.ok / G.qs.length;
+    if (G.kind === 'exam') {
+      const stars = failed ? 0 : acc === 1 ? 3 : acc >= .8 ? 2 : acc >= .6 ? 1 : 0;
+      const prev = S.stars[G.c] || 0, wasLocked = G.c < NCH - 1 && !unlocked(G.c + 1);
+      if (stars > prev) { S.stars[G.c] = stars; save(); }
+      if (stars >= 1) { G.xp += 50; addXp(50); }
+      r.stars = stars; r.win = stars >= 1;
+      r.title = failed ? 'Plus de vies' : stars === 3 ? 'Sans faute !' : stars >= 1 ? 'Épreuve réussie' : 'Presque…';
+      r.sub = failed ? 'Révisez les mots manqués, puis retentez l\'épreuve.' : stars === 0 ? 'Il faut 60 % de bonnes réponses pour gagner une étoile.' : (wasLocked && unlocked(G.c + 1) ? 'Le chapitre ' + (G.c + 2) + ' est maintenant ouvert.' : '');
+      r.unlockedNext = wasLocked && unlocked(G.c + 1);
+    } else r.title = acc >= .9 ? 'Excellent !' : acc >= .6 ? 'Bien joué' : 'Continuez, ça rentre';
+    r.stats = [[G.ok + '/' + (G.kind === 'exam' && failed ? n : G.qs.length), 'bonnes réponses'], ['×' + G.best, 'meilleur combo'], ['+' + G.xp, 'XP']];
+  }
+  if (r.win || (G.kind === 'cards') || (G.kind === 'pairs') || (G.kind === 'quiz' && G.ok / G.qs.length >= .8)) { sfx('win'); confetti(); }
+  view = { name: 'result', r }; render(); window.scrollTo(0, 0);
+}
+function renderResult() {
+  const r = view.r;
+  $app.innerHTML = `<div class="game"><div class="card result">
+    ${r.stars !== undefined ? `<div class="bigstars">${[0, 1, 2].map(i => `<span class="${i < r.stars ? 'on' : ''}">${ic('star', '')}</span>`).join('')}</div>` : `<div style="color:var(--gold-bright)">${ic(r.kind === 'blitz' ? 'clock' : 'trophy', '').replace('<svg', '<svg style="width:64px;height:64px"')}</div>`}
+    <h2>${r.title}</h2>
+    ${r.sub ? `<p class="muted" style="margin:0">${r.sub}</p>` : ''}
+    <div class="rstats">${r.stats.map(([v, l]) => `<div class="stat"><b class="tnum">${v}</b><span>${l}</span></div>`).join('')}</div>
+    ${r.missed.length ? `<div class="missed"><div class="eyebrow">À revoir</div>${r.missed.slice(0, 10).map(id => `<div class="m"><button class="play" data-say="${id}" aria-label="Écouter">${ic('speaker')}</button><span class="ar" lang="ar">${W[id].ar}</span><span><b>${esc(W[id].ph)}</b> · ${esc(W[id].fr)}</span></div>`).join('')}</div>` : ''}
+    <div class="row">
+      ${r.c !== null && r.c !== undefined ? `<button class="btn ghost" id="toCh">Retour au chapitre</button>` : `<button class="btn ghost" id="toHome">Accueil</button>`}
+      ${r.unlockedNext ? `<button class="btn goldb" id="toNext">Chapitre ${r.c + 2} ${ic('ba')}</button>` : `<button class="btn" id="again">${ic('repeat')} Rejouer</button>`}
+    </div>
+  </div></div>`;
+  bindSay();
+  const b = id => document.getElementById(id);
+  if (b('toCh')) b('toCh').onclick = () => go('chapter', { c: r.c });
+  if (b('toHome')) b('toHome').onclick = () => go('home');
+  if (b('toNext')) b('toNext').onclick = () => go('chapter', { c: r.c + 1 });
+  if (b('again')) b('again').onclick = () => {
+    if (r.kind === 'blitz') return startBlitz();
+    if (G.mode === 'review') return S.wrong.length ? startReview() : go('home');
+    startMode(G.kind === 'quiz' ? G.mode : G.kind, r.c);
+  };
+}
+
+/* ---------- lexique ---------- */
+const strip = s => s.normalize('NFD').replace(/[ً-ٰٟ̀-ͯ]/g, '').replace(/[أإآٱ]/g, 'ا').toLowerCase();
+function renderLexique() {
+  const f = view.f || 'all';
+  $app.innerHTML = `
+  <button class="back" id="bk">${ic('back')} Accueil</button>
+  <div class="sec" style="margin-top:8px"><h2>Lexique des 300 mots</h2><span class="muted" style="font-size:14px">Classés par fréquence</span></div>
+  <div class="search">${ic('search')}<input id="q" type="search" placeholder="Chercher en français, en phonétique ou en arabe" value="${esc(view.q || '')}" autocomplete="off"></div>
+  <div class="filters">${[['all', 'Tous'], ['known', 'Maîtrisés'], ['learn', 'À apprendre'], ['wrong', 'Erreurs']].map(([k, l]) => `<button data-f="${k}" class="${f === k ? 'on' : ''}">${l}</button>`).join('')}</div>
+  <div class="wordlist" id="lx"></div>`;
+  document.getElementById('bk').onclick = () => go('home');
+  const q = document.getElementById('q');
+  const draw = () => {
+    const t = strip(q.value.trim()); view.q = q.value;
+    const list = W.filter(w => (f === 'all' || (f === 'known' && isKnown(w.id)) || (f === 'learn' && !isKnown(w.id)) || (f === 'wrong' && S.wrong.includes(w.id)))
+      && (!t || strip(w.fr).includes(t) || strip(w.ph).includes(t) || strip(w.ar).includes(t) || String(w.n) === t));
+    document.getElementById('lx').innerHTML = list.length ? list.map(wordRow).join('') : `<div style="padding:20px" class="muted">Aucun mot ne correspond.</div>`;
+    bindSay();
+  };
+  q.oninput = draw; draw();
+  $app.querySelectorAll('[data-f]').forEach(b => b.onclick = () => { view.f = b.dataset.f; renderLexique(); });
+}
+
+/* ---------- settings ---------- */
+function openSettings() {
+  const host = document.getElementById('sheetHost');
+  const hasTTS = 'speechSynthesis' in window;
+  host.innerHTML = `<div class="sheet-bg" id="sbg"><div class="sheet" role="dialog" aria-modal="true" aria-labelledby="stt">
+    <div style="display:flex;justify-content:space-between;align-items:center"><h2 id="stt" style="font-size:22px">Réglages</h2><button class="iconbtn" id="sx" aria-label="Fermer">${ic('x')}</button></div>
+    <div class="field"><label for="voiceSel">Voix arabe</label>
+      ${voices.length ? `<select id="voiceSel">${voices.map(v => `<option value="${esc(v.name)}" ${arVoice && v.name === arVoice.name ? 'selected' : ''}>${esc(v.name)} (${esc(v.lang)})</option>`).join('')}</select>`
+        : `<div class="note warn">${hasTTS ? "Aucune voix arabe trouvée sur cet appareil. Sur Mac : Réglages Système › Accessibilité › Contenu énoncé › Voix du système › ajouter une voix arabe. Sur iPhone : Réglages › Accessibilité › Contenu énoncé › Voix › Arabe. Sur Android : installez la voix arabe de Google dans les paramètres de synthèse vocale. Chrome sur ordinateur propose aussi une voix Google arabe." : "Ce navigateur ne propose pas de synthèse vocale."}</div>`}
+    </div>
+    <div class="field"><label for="rate">Vitesse de lecture : <span id="rv">${S.rate.toFixed(2).replace('.', ',')}</span></label><input id="rate" type="range" min="0.4" max="1.2" step="0.05" value="${S.rate}"><button class="btn ghost" id="test" style="align-self:flex-start">${ic('speaker')} Tester : <span class="ar" lang="ar">بِسْمِ ٱللَّهِ</span></button></div>
+    <div class="field"><label for="goal">Objectif quotidien</label><select id="goal">${[30, 50, 100, 200].map(g => `<option value="${g}" ${S.goal === g ? 'selected' : ''}>${g} XP par jour</option>`).join('')}</select></div>
+    <label class="switch" for="sfxT"><span><b>Effets sonores</b><br><small class="muted">Sons de bonne et mauvaise réponse</small></span><input type="checkbox" id="sfxT" ${S.sfx ? 'checked' : ''}></label>
+    <label class="switch" for="unl"><span><b>Ouvrir tous les chapitres</b><br><small class="muted">Pour réviser librement sans passer les épreuves</small></span><input type="checkbox" id="unl" ${S.unlockAll ? 'checked' : ''}></label>
+    <div class="note">La progression est enregistrée dans ce navigateur, sur cet appareil.</div>
+    <div id="rz"><button class="btn ghost" id="reset">Effacer ma progression</button></div>
+  </div></div>`;
+  const close = () => { host.innerHTML = ''; render(); };
+  document.getElementById('sx').onclick = close;
+  document.getElementById('sbg').onclick = e => { if (e.target.id === 'sbg') close(); };
+  const vs = document.getElementById('voiceSel'); if (vs) vs.onchange = () => { S.voice = vs.value; save(); loadVoices(); speak('بِسْمِ ٱللَّهِ'); };
+  const rate = document.getElementById('rate'); rate.oninput = () => { S.rate = +rate.value; document.getElementById('rv').textContent = S.rate.toFixed(2).replace('.', ','); save(); };
+  document.getElementById('test').onclick = () => speak('بِسْمِ ٱللَّهِ');
+  document.getElementById('goal').onchange = e => { S.goal = +e.target.value; save(); };
+  document.getElementById('sfxT').onchange = e => { S.sfx = e.target.checked; save(); };
+  document.getElementById('unl').onchange = e => { S.unlockAll = e.target.checked; save(); };
+  document.getElementById('reset').onclick = () => {
+    document.getElementById('rz').innerHTML = `<div class="note warn" style="display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap"><span>Effacer XP, étoiles et maîtrise ?</span><span class="row" style="margin:0"><button class="btn ghost" id="rn">Annuler</button><button class="btn kob" id="ry">Effacer</button></span></div>`;
+    document.getElementById('rn').onclick = openSettings;
+    document.getElementById('ry').onclick = () => { const keep = { rate: S.rate, voice: S.voice, sfx: S.sfx }; S = Object.assign({}, DEF, keep); save(); host.innerHTML = ''; go('home'); toast('Progression effacée'); };
+  };
+}
+
+/* ---------- confetti ---------- */
+function confetti() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const cv = document.getElementById('confetti'); cv.hidden = false;
+  const ctx = cv.getContext('2d'), dpr = devicePixelRatio || 1;
+  cv.width = innerWidth * dpr; cv.height = innerHeight * dpr; ctx.scale(dpr, dpr);
+  const cs = getComputedStyle(document.documentElement);
+  const cols = ['--gold-bright', '--lapis', '--good', '--gold'].map(v => cs.getPropertyValue(v).trim());
+  const P = Array.from({ length: 120 }, () => ({ x: innerWidth / 2 + (Math.random() - .5) * 120, y: innerHeight * .35, vx: (Math.random() - .5) * 12, vy: -Math.random() * 12 - 4, s: 5 + Math.random() * 6, r: Math.random() * 6, vr: (Math.random() - .5) * .3, c: cols[Math.floor(Math.random() * cols.length)] }));
+  let f = 0;
+  (function tick() {
+    ctx.clearRect(0, 0, innerWidth, innerHeight);
+    P.forEach(p => { p.vy += .35; p.x += p.vx; p.y += p.vy; p.vx *= .99; p.r += p.vr; ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r); ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s); ctx.restore(); });
+    if (++f < 140) requestAnimationFrame(tick); else { ctx.clearRect(0, 0, innerWidth, innerHeight); cv.hidden = true; }
+  })();
+}
+
+/* ---------- keyboard ---------- */
+document.addEventListener('keydown', e => {
+  if (document.getElementById('sbg') || e.target.tagName === 'INPUT') return;
+  if (view.name !== 'game' || !G) return;
+  if (G.kind === 'cards') {
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); if (!G.flipped) { G.flipped = true; renderCards(); } }
+    else if (e.key === 'ArrowRight' && G.flipped) cardNext(true);
+    else if (e.key === 'ArrowLeft' && G.flipped) cardNext(false);
+    return;
+  }
+  if (G.kind === 'pairs') return;
+  const q = G.kind === 'blitz' ? G.q : G.qs[G.i];
+  if (/^[1-4]$/.test(e.key) && !G.answered) answer(q.opts[+e.key - 1].id);
+  else if (e.key === 'Enter' && G.answered && G.kind !== 'blitz') { e.preventDefault(); nextQ(); }
+});
+
+fromHash();
+</script>
+</body>
+</html>
